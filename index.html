@@ -221,4 +221,248 @@ body {
     </footer>
 
 </body>
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        /* === KHATARNAK PRO DESIGN === */
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+
+        body {
+            background-color: #000; color: #ffffff; display: flex;
+            justify-content: center; align-items: center;
+            min-height: 100vh; overflow-x: hidden;
+        }
+
+        .bg-animation {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(-45deg, #0f0c29, #302b63, #000000, #410f24);
+            background-size: 400% 400%; animation: gradientBG 8s ease infinite; z-index: -2;
+        }
+
+        .glow-orb {
+            position: absolute; width: 300px; height: 300px; background: #ff007f;
+            filter: blur(140px); border-radius: 50%;
+            animation: pulseOrb 2.5s alternate infinite ease-in-out; z-index: -1;
+        }
+
+        .premium-card {
+            background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
+            border: 2px solid rgba(255, 255, 255, 0.1); border-radius: 25px;
+            padding: 40px 20px; width: 95%; max-width: 450px; text-align: center;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.9), inset 0 0 15px rgba(0, 242, 254, 0.2);
+            position: relative; overflow: hidden;
+        }
+
+        /* =========================================
+           UPDATED: SLOW 3D FALLING TEXT
+           ========================================= */
+        .falling-3d-text {
+            position: absolute; 
+            top: -100px; 
+            left: 50%; 
+            transform: translateX(-50%);
+            font-size: 3.5rem; /* Thoda aur bada kiya taaki saaf dikhe */
+            font-weight: 900; 
+            color: rgba(255, 255, 255, 0.3); /* Padhne mein aasan */
+            text-transform: uppercase; 
+            white-space: nowrap; 
+            pointer-events: none; 
+            letter-spacing: 5px;
+            /* Tagra Neon 3D Effect */
+            text-shadow: 
+                0 0 10px rgba(0, 242, 254, 0.6),
+                3px 3px 0px #ff007f, 
+                -3px -3px 0px #00f2fe;
+            /* Animation Time 4s se badha kar 15s kar diya = SLOW MOTION */
+            animation: fall3DSlow 15s linear infinite; 
+            z-index: 0;
+        }
+
+        @keyframes fall3DSlow {
+            0% { top: -20%; transform: translateX(-50%) perspective(800px) rotateX(15deg) scale(0.6); opacity: 0; }
+            10% { opacity: 0.9; }
+            90% { opacity: 0.9; }
+            100% { top: 120%; transform: translateX(-50%) perspective(800px) rotateX(15deg) scale(1.2); opacity: 0; }
+        }
+
+        /* Jumping Text Logo */
+        .animated-logo { display: flex; justify-content: center; gap: 6px; margin-bottom: 20px; position: relative; z-index: 2;}
+        .animated-logo span {
+            font-size: 3.5rem; font-weight: 900; color: transparent; -webkit-text-stroke: 2px #fff;
+            animation: dangerBounce 1.5s infinite ease-in-out; animation-delay: calc(0.15s * var(--i));
+        }
+
+        .pro-btn {
+            background: linear-gradient(90deg, #ff007f, #00f2fe, #ffeb3b); background-size: 200% auto;
+            color: #000; border: none; padding: 15px 35px; border-radius: 50px;
+            font-size: 1.2rem; font-weight: 900; cursor: pointer;
+            box-shadow: 0 10px 30px rgba(255, 0, 127, 0.6); transition: 0.3s; text-transform: uppercase;
+            animation: btnGlow 2s infinite alternate; position: relative; z-index: 2;
+        }
+        .pro-btn:hover { transform: scale(1.1); box-shadow: 0 15px 40px rgba(0, 242, 254, 0.8); color: #fff; }
+
+        .admin-link {
+            display: block; margin-top: 20px; color: #555; font-size: 0.8rem; cursor: pointer; text-decoration: underline; position: relative; z-index: 2;
+        }
+
+        /* Screens */
+        #music-area, #admin-login, #admin-panel { display: none; position: relative; z-index: 2; }
+        
+        .scroll-box { max-height: 400px; overflow-y: auto; padding: 15px 10px; margin-top: 10px; position: relative; z-index: 2;}
+        .scroll-box::-webkit-scrollbar { width: 5px; }
+        .scroll-box::-webkit-scrollbar-thumb { background: #00f2fe; border-radius: 10px; }
+
+        /* Chuck-Bhuk Video Cards */
+        .video-card {
+            background: #000; margin-bottom: 30px; border-radius: 15px; overflow: hidden;
+            border: 4px solid transparent; animation: chukBhuk 0.6s infinite alternate; position: relative; z-index: 2;
+        }
+        iframe { width: 100%; aspect-ratio: 16/9; border: none; display: block; }
+
+        /* Admin Panel Inputs */
+        input[type="password"], input[type="text"] {
+            width: 90%; padding: 12px; margin: 15px 0; border-radius: 10px; border: 2px solid #00f2fe;
+            background: #111; color: #fff; font-size: 1rem; outline: none;
+        }
+        .upload-btn { background: #ff007f; color: #fff; border: none; padding: 10px 20px; border-radius: 10px; font-weight: bold; cursor: pointer; }
+
+        .back-btn { background: rgba(0, 242, 254, 0.1); color: #00f2fe; border: 2px solid #00f2fe; padding: 8px 20px; border-radius: 30px; cursor: pointer; font-weight: 800; margin-bottom: 10px; transition: 0.3s;}
+        .back-btn:hover { background: #00f2fe; color: #000; }
+
+        /* Animations */
+        @keyframes gradientBG { 0% {background-position: 0% 50%;} 50% {background-position: 100% 50%;} 100% {background-position: 0% 50%;} }
+        @keyframes pulseOrb { 0% { transform: scale(0.7); opacity: 0.3; background: #ff007f; } 100% { transform: scale(1.3); opacity: 0.8; background: #00f2fe;} }
+        @keyframes dangerBounce {
+            0%, 100% { transform: translateY(0); color: transparent; text-shadow: 0 0 0px transparent; }
+            50% { transform: translateY(-15px) scale(1.1); color: #fff; -webkit-text-stroke: 0px; text-shadow: 0 0 10px #00f2fe, 0 0 30px #ff007f; }
+        }
+        @keyframes chukBhuk {
+            0% { border-color: #ff007f; box-shadow: 0 0 15px #ff007f; }
+            50% { border-color: #00f2fe; box-shadow: 0 0 15px #00f2fe; }
+            100% { border-color: #ffeb3b; box-shadow: 0 0 15px #ffeb3b; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-animation"></div>
+    <div class="glow-orb"></div>
+
+    <div class="premium-card">
+        
+        <!-- Welcome Screen -->
+        <div id="welcome-screen">
+            <div class="animated-logo">
+                <span style="--i:1;">S</span><span style="--i:2;">A</span><span style="--i:3;">T</span>
+                <span style="--i:4;">I</span><span style="--i:5;">S</span><span style="--i:6;">H</span>
+            </div>
+            <p style="color: #ccc; margin-bottom: 20px;">Satish Coder Website Me Swagat Hai.</p>
+            <button class="pro-btn" onclick="openScreen('music-area')">Song Sune 🔊</button>
+            <span class="admin-link" onclick="openScreen('admin-login')">Admin Panel</span>
+        </div>
+
+        <!-- Music Playlist Screen -->
+        <div id="music-area">
+            <!-- UPDATED: 3D SLOW FALLING TEXT -->
+            <div class="falling-3d-text">SATISH CODER</div>
+            
+            <button class="back-btn" onclick="openScreen('welcome-screen')">← Wapas</button>
+            <h2 style="color: #fff; text-shadow: 0 0 10px #00f2fe;">🔥 Playlist 🔥</h2>
+            
+            <div class="scroll-box" id="playlist-container"></div>
+        </div>
+
+        <!-- Admin Login Screen -->
+        <div id="admin-login">
+            <button class="back-btn" onclick="openScreen('welcome-screen')">← Wapas</button>
+            <h2 style="color: #ff007f;">Admin Login</h2>
+            <input type="password" id="admin-pass" placeholder="Password Dalein...">
+            <br>
+            <button class="upload-btn" onclick="checkPassword()">Login</button>
+        </div>
+
+        <!-- Admin Control Panel -->
+        <div id="admin-panel">
+            <button class="back-btn" onclick="openScreen('welcome-screen')">← Logout</button>
+            <h2 style="color: #00f2fe;">Video Upload</h2>
+            <input type="text" id="yt-link" placeholder="YouTube Video Link Paste Karein">
+            <br>
+            <button class="upload-btn" onclick="addVideo()">Upload Video 🚀</button>
+            <p id="upload-msg" style="color: #ffeb3b; margin-top:10px; font-size:0.9rem;"></p>
+        </div>
+
+    </div>
+
+    <script>
+        // Database simulation (Browser LocalStorage)
+        let defaultSongs = ["zvVcfgpLaYM", "0F_M8afjndI", "tS8XNIpATO8", "92BTpXGA8Cw", "AQSRq6eGWp0"];
+        let myPlaylist = [];
+
+        try {
+            myPlaylist = JSON.parse(localStorage.getItem("satishPlaylist")) || defaultSongs;
+        } catch(e) {
+            myPlaylist = defaultSongs;
+        }
+
+        // Screen Switcher
+        function openScreen(screenId) {
+            document.querySelectorAll('#welcome-screen, #music-area, #admin-login, #admin-panel').forEach(el => el.style.display = 'none');
+            document.getElementById(screenId).style.display = 'block';
+
+            if(screenId === 'music-area') {
+                loadVideos();
+            }
+        }
+
+        // Load Videos (Lazy Loading enabled)
+        function loadVideos() {
+            const container = document.getElementById('playlist-container');
+            container.innerHTML = myPlaylist.map(id => `
+                <div class="video-card">
+                    <iframe src="https://www.youtube.com/embed/${id}" loading="lazy" allowfullscreen></iframe>
+                </div>
+            `).join('');
+        }
+
+        // Password Check
+        function checkPassword() {
+            let pass = document.getElementById('admin-pass').value;
+            if(pass === "satish1234") {
+                document.getElementById('admin-pass').value = '';
+                openScreen('admin-panel');
+            } else {
+                alert("Galat Password! Sirf Satish Coder entry kar sakta hai.");
+            }
+        }
+
+        // Extract ID from Link and Save
+        function addVideo() {
+            let url = document.getElementById('yt-link').value;
+            if(!url) return alert("Link daalna zaroori hai!");
+
+            // Extract YouTube ID
+            let videoId = "";
+            let match = url.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))([^&?]+)/);
+            if(match && match[1]) {
+                videoId = match[1];
+            } else {
+                videoId = url; 
+            }
+
+            // Save to Array and LocalStorage
+            myPlaylist.unshift(videoId); 
+            try {
+                localStorage.setItem("satishPlaylist", JSON.stringify(myPlaylist));
+            } catch(e) {}
+
+            document.getElementById('yt-link').value = '';
+            document.getElementById('upload-msg').innerText = "Video Successfully Uploaded! 🎉";
+            setTimeout(() => { document.getElementById('upload-msg').innerText = ""; }, 3000);
+        }
+    </script>
+</body>
 </html>

@@ -3,69 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700;900&display=swap" rel="stylesheet">
+    
+    <!-- === GOOGLE SEARCH SEO TAGS (Yahi aapko Google pe layega) === -->
+    <title>Satish Coder - Official Website | Maithali Songs</title>
+    <meta name="description" content="Aap sabhi ko Satish Coder website mein swagat hai. Yahan sunein premium Maithali songs aur hits. Official site of Satish Coder.">
+    <meta name="keywords" content="Satish Coder, satish coder, satish coder website, satish coder maithali, satish academy, web developer satish">
+    <meta name="author" content="Satish Coder">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;900&display=swap" rel="stylesheet">
     <style>
-        /* === KHATARNAK PRO DESIGN === */
+        /* === ULTRA PRO VIP DESIGN === */
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
-
-        body {
-            background-color: #000; color: #ffffff; display: flex;
-            justify-content: center; align-items: center;
-            min-height: 100vh; overflow-x: hidden;
+        
+        body { 
+            background: #050505; color: #fff; overflow: hidden; 
+            display: flex; justify-content: center; align-items: center; min-height: 100vh;
         }
 
-        .bg-animation {
+        /* Animated Dark Gradient Background */
+        .bg-anim {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(-45deg, #0f0c29, #302b63, #000000, #410f24);
-            background-size: 400% 400%; animation: gradientBG 8s ease infinite; z-index: -2;
+            background: linear-gradient(-45deg, #0f172a, #000000, #1e1b4b, #020617);
+            background-size: 400% 400%; animation: gradientBG 10s ease infinite; z-index: -2;
         }
 
-        .glow-orb {
-            position: absolute; width: 300px; height: 300px; background: #ff007f;
-            filter: blur(140px); border-radius: 50%;
-            animation: pulseOrb 2.5s alternate infinite ease-in-out; z-index: -1;
+        /* KONE MEIN NAAM (Top Right) */
+        .corner-name {
+            position: fixed; top: 15px; right: 20px;
+            font-size: 14px; font-weight: 900; color: #00f2fe;
+            text-transform: uppercase; letter-spacing: 2px;
+            text-shadow: 0 0 10px #00f2fe; z-index: 1000;
         }
 
-        .premium-card {
-            background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
-            border: 2px solid rgba(255, 255, 255, 0.1); border-radius: 25px;
+        /* Main Glass Card */
+        .main-card {
+            background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 25px;
             padding: 40px 20px; width: 95%; max-width: 450px; text-align: center;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.9), inset 0 0 15px rgba(0, 242, 254, 0.2);
-            position: relative; overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.8), inset 0 0 20px rgba(0, 242, 254, 0.1);
+            position: relative; overflow: hidden; height: 85vh; display: flex; flex-direction: column;
         }
 
-        /* =========================================
-           UPDATED: SLOW 3D FALLING TEXT
-           ========================================= */
-        .falling-3d-text {
-            position: absolute; 
-            top: -100px; 
-            left: 50%; 
-            transform: translateX(-50%);
-            font-size: 3.5rem; /* Thoda aur bada kiya taaki saaf dikhe */
-            font-weight: 900; 
-            color: rgba(255, 255, 255, 0.3); /* Padhne mein aasan */
-            text-transform: uppercase; 
-            white-space: nowrap; 
-            pointer-events: none; 
-            letter-spacing: 5px;
-            /* Tagra Neon 3D Effect */
-            text-shadow: 
-                0 0 10px rgba(0, 242, 254, 0.6),
-                3px 3px 0px #ff007f, 
-                -3px -3px 0px #00f2fe;
-            /* Animation Time 4s se badha kar 15s kar diya = SLOW MOTION */
-            animation: fall3DSlow 15s linear infinite; 
-            z-index: 0;
-        }
-
-        @keyframes fall3DSlow {
-            0% { top: -20%; transform: translateX(-50%) perspective(800px) rotateX(15deg) scale(0.6); opacity: 0; }
-            10% { opacity: 0.9; }
-            90% { opacity: 0.9; }
-            100% { top: 120%; transform: translateX(-50%) perspective(800px) rotateX(15deg) scale(1.2); opacity: 0; }
-        }
-
+        /* ================= PAGE 1: WELCOME SCREEN ================= */
+        #page-welcome { display: flex; flex-direction: column; justify-content: center; height: 100%; z-index: 5; }
+        
         /* Jumping Text Logo */
         .animated-logo { display: flex; justify-content: center; gap: 6px; margin-bottom: 20px; position: relative; z-index: 2;}
         .animated-logo span {
@@ -73,103 +54,129 @@
             animation: dangerBounce 1.5s infinite ease-in-out; animation-delay: calc(0.15s * var(--i));
         }
 
-        .pro-btn {
-            background: linear-gradient(90deg, #ff007f, #00f2fe, #ffeb3b); background-size: 200% auto;
-            color: #000; border: none; padding: 15px 35px; border-radius: 50px;
-            font-size: 1.2rem; font-weight: 900; cursor: pointer;
-            box-shadow: 0 10px 30px rgba(255, 0, 127, 0.6); transition: 0.3s; text-transform: uppercase;
-            animation: btnGlow 2s infinite alternate; position: relative; z-index: 2;
-        }
-        .pro-btn:hover { transform: scale(1.1); box-shadow: 0 15px 40px rgba(0, 242, 254, 0.8); color: #fff; }
-
-        .admin-link {
-            display: block; margin-top: 20px; color: #555; font-size: 0.8rem; cursor: pointer; text-decoration: underline; position: relative; z-index: 2;
-        }
-
-        /* Screens */
-        #music-area, #admin-login, #admin-panel { display: none; position: relative; z-index: 2; }
+        p { color: #cbd5e1; font-size: 1rem; margin-bottom: 30px; }
         
-        .scroll-box { max-height: 400px; overflow-y: auto; padding: 15px 10px; margin-top: 10px; position: relative; z-index: 2;}
-        .scroll-box::-webkit-scrollbar { width: 5px; }
-        .scroll-box::-webkit-scrollbar-thumb { background: #00f2fe; border-radius: 10px; }
-
-        /* Chuck-Bhuk Video Cards */
-        .video-card {
-            background: #000; margin-bottom: 30px; border-radius: 15px; overflow: hidden;
-            border: 4px solid transparent; animation: chukBhuk 0.6s infinite alternate; position: relative; z-index: 2;
+        .btn {
+            background: linear-gradient(45deg, #00f2fe, #ff007f); color: #fff;
+            border: none; padding: 15px 35px; border-radius: 50px; font-size: 1.1rem; font-weight: bold;
+            cursor: pointer; text-transform: uppercase; transition: 0.3s;
+            box-shadow: 0 0 20px rgba(0, 242, 254, 0.5); position: relative; z-index: 2;
         }
-        iframe { width: 100%; aspect-ratio: 16/9; border: none; display: block; }
+        .btn:hover { transform: scale(1.05); box-shadow: 0 0 30px #ff007f; }
 
-        /* Admin Panel Inputs */
-        input[type="password"], input[type="text"] {
-            width: 90%; padding: 12px; margin: 15px 0; border-radius: 10px; border: 2px solid #00f2fe;
-            background: #111; color: #fff; font-size: 1rem; outline: none;
-        }
-        .upload-btn { background: #ff007f; color: #fff; border: none; padding: 10px 20px; border-radius: 10px; font-weight: bold; cursor: pointer; }
+        .admin-link { margin-top: 25px; color: #64748b; font-size: 0.85rem; cursor: pointer; text-decoration: underline; position: relative; z-index: 2; }
 
-        .back-btn { background: rgba(0, 242, 254, 0.1); color: #00f2fe; border: 2px solid #00f2fe; padding: 8px 20px; border-radius: 30px; cursor: pointer; font-weight: 800; margin-bottom: 10px; transition: 0.3s;}
+        /* ================= PAGE 2: PLAYLIST SCREEN ================= */
+        #page-playlist { display: none; height: 100%; flex-direction: column; z-index: 5; }
+        
+        .header-playlist { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+        .back-btn { background: rgba(0, 242, 254, 0.1); color: #00f2fe; border: 1px solid #00f2fe; padding: 5px 15px; border-radius: 20px; cursor: pointer; font-weight: bold; transition: 0.3s;}
         .back-btn:hover { background: #00f2fe; color: #000; }
+        
+        /* 3D FALLING TEXT (Slow Motion) */
+        .falling-text {
+            position: absolute; top: -100px; left: 50%; transform: translateX(-50%);
+            font-size: 3.5rem; font-weight: 900; color: rgba(255, 255, 255, 0.2);
+            text-transform: uppercase; white-space: nowrap; pointer-events: none; letter-spacing: 5px;
+            text-shadow: 0 0 10px rgba(0, 242, 254, 0.6), 3px 3px 0px #ff007f, -3px -3px 0px #00f2fe;
+            animation: fallSlow 15s linear infinite; z-index: 0;
+        }
 
+        /* 2GB RAM TRICK: NEON VIDEO CARDS & SCROLL */
+        .scroll-area { overflow-y: auto; flex-grow: 1; padding-right: 5px; z-index: 2; position: relative;}
+        .scroll-area::-webkit-scrollbar { width: 4px; }
+        .scroll-area::-webkit-scrollbar-thumb { background: #00f2fe; border-radius: 10px; }
+
+        /* CHUCK-BHUK ANIMATION (Neon Border) */
+        .neo-video-card {
+            background: rgba(0,0,0,0.5); border: 2px solid transparent; border-radius: 15px;
+            margin-bottom: 25px; padding: 10px; cursor: pointer; transition: 0.3s;
+            position: relative; animation: chukBhuk 0.8s infinite alternate;
+        }
+        
+        .thumb-box { position: relative; width: 100%; aspect-ratio: 16/9; border-radius: 10px; overflow: hidden; background: #111; }
+        .thumb-img { width: 100%; height: 100%; object-fit: cover; opacity: 0.8; transition: 0.3s; }
+        .neo-video-card:hover .thumb-img { opacity: 1; transform: scale(1.05); }
+
+        /* Custom Neon Play Button */
+        .play-btn-neon {
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            width: 60px; height: 60px; background: rgba(0, 0, 0, 0.6); border: 2px solid #00f2fe;
+            border-radius: 50%; display: flex; justify-content: center; align-items: center;
+            color: #00f2fe; font-size: 24px; backdrop-filter: blur(5px); transition: 0.3s;
+        }
+        .neo-video-card:hover .play-btn-neon { background: #00f2fe; color: #000; box-shadow: 0 0 15px #00f2fe; }
+
+        .video-title { color: #fff; font-size: 0.95rem; font-weight: 600; margin-top: 10px; text-align: left; }
+        iframe { width: 100%; aspect-ratio: 16/9; border: none; border-radius: 10px; display: block; }
+
+        /* ================= PAGE 3: ADMIN PANEL ================= */
+        #page-admin { display: none; height: 100%; flex-direction: column; justify-content: center; z-index: 5; }
+        input { width: 100%; padding: 12px; margin: 15px 0; border-radius: 10px; border: 1px solid #00f2fe; background: #111; color: #fff; outline: none; }
+        .upload-btn { background: #ff007f; color: #fff; border: none; padding: 12px; border-radius: 10px; font-weight: bold; cursor: pointer; }
+        
         /* Animations */
         @keyframes gradientBG { 0% {background-position: 0% 50%;} 50% {background-position: 100% 50%;} 100% {background-position: 0% 50%;} }
-        @keyframes pulseOrb { 0% { transform: scale(0.7); opacity: 0.3; background: #ff007f; } 100% { transform: scale(1.3); opacity: 0.8; background: #00f2fe;} }
         @keyframes dangerBounce {
             0%, 100% { transform: translateY(0); color: transparent; text-shadow: 0 0 0px transparent; }
             50% { transform: translateY(-15px) scale(1.1); color: #fff; -webkit-text-stroke: 0px; text-shadow: 0 0 10px #00f2fe, 0 0 30px #ff007f; }
         }
+        @keyframes fallSlow {
+            0% { top: -20%; transform: translateX(-50%) perspective(800px) rotateX(15deg) scale(0.6); opacity: 0; }
+            10% { opacity: 0.9; }
+            90% { opacity: 0.9; }
+            100% { top: 120%; transform: translateX(-50%) perspective(800px) rotateX(15deg) scale(1.2); opacity: 0; }
+        }
         @keyframes chukBhuk {
-            0% { border-color: #ff007f; box-shadow: 0 0 15px #ff007f; }
-            50% { border-color: #00f2fe; box-shadow: 0 0 15px #00f2fe; }
-            100% { border-color: #ffeb3b; box-shadow: 0 0 15px #ffeb3b; }
+            0% { border-color: #ff007f; box-shadow: 0 0 10px #ff007f; }
+            50% { border-color: #00f2fe; box-shadow: 0 0 10px #00f2fe; }
+            100% { border-color: #ffeb3b; box-shadow: 0 0 10px #ffeb3b; }
         }
     </style>
 </head>
 <body>
 
-    <div class="bg-animation"></div>
-    <div class="glow-orb"></div>
+    <!-- Background -->
+    <div class="bg-anim"></div>
+    
+    <!-- Kone Wala Naam -->
+    <div class="corner-name">Satish Coder</div>
 
-    <div class="premium-card">
+    <div class="main-card">
         
-        <!-- Welcome Screen -->
-        <div id="welcome-screen">
+        <!-- PAGE 1: WELCOME -->
+        <div id="page-welcome">
             <div class="animated-logo">
                 <span style="--i:1;">S</span><span style="--i:2;">A</span><span style="--i:3;">T</span>
                 <span style="--i:4;">I</span><span style="--i:5;">S</span><span style="--i:6;">H</span>
             </div>
-            <p style="color: #ccc; margin-bottom: 20px;">Satish Coder Website Me Swagat Hai.</p>
-            <button class="pro-btn" onclick="openScreen('music-area')">Song Sune 🔊</button>
-            <span class="admin-link" onclick="openScreen('admin-login')">Admin Panel</span>
+            <p>Aap sabhi ko Satish Coder website mein swagat hai.</p>
+            <button class="btn" onclick="openPage('page-playlist')">Maithali Song Sune 🎧</button>
+            <span class="admin-link" onclick="adminLogin()">Admin Login</span>
         </div>
 
-        <!-- Music Playlist Screen -->
-        <div id="music-area">
-            <!-- UPDATED: 3D SLOW FALLING TEXT -->
-            <div class="falling-3d-text">SATISH CODER</div>
+        <!-- PAGE 2: PLAYLIST (2GB RAM TRICK ACTIVE) -->
+        <div id="page-playlist">
+            <!-- Falling 3D Text -->
+            <div class="falling-text">SATISH CODER</div>
             
-            <button class="back-btn" onclick="openScreen('welcome-screen')">← Wapas</button>
-            <h2 style="color: #fff; text-shadow: 0 0 10px #00f2fe;">🔥 Playlist 🔥</h2>
+            <div class="header-playlist">
+                <button class="back-btn" onclick="openPage('page-welcome')">← Wapas</button>
+                <h3 style="color: #fff; text-shadow: 0 0 10px #00f2fe;">🔥 Playlist 🔥</h3>
+            </div>
             
-            <div class="scroll-box" id="playlist-container"></div>
+            <div class="scroll-area" id="video-feed">
+                <!-- Videos JS se aayenge -->
+            </div>
         </div>
 
-        <!-- Admin Login Screen -->
-        <div id="admin-login">
-            <button class="back-btn" onclick="openScreen('welcome-screen')">← Wapas</button>
-            <h2 style="color: #ff007f;">Admin Login</h2>
-            <input type="password" id="admin-pass" placeholder="Password Dalein...">
-            <br>
-            <button class="upload-btn" onclick="checkPassword()">Login</button>
-        </div>
-
-        <!-- Admin Control Panel -->
-        <div id="admin-panel">
-            <button class="back-btn" onclick="openScreen('welcome-screen')">← Logout</button>
-            <h2 style="color: #00f2fe;">Video Upload</h2>
-            <input type="text" id="yt-link" placeholder="YouTube Video Link Paste Karein">
-            <br>
-            <button class="upload-btn" onclick="addVideo()">Upload Video 🚀</button>
-            <p id="upload-msg" style="color: #ffeb3b; margin-top:10px; font-size:0.9rem;"></p>
+        <!-- PAGE 3: ADMIN PANEL -->
+        <div id="page-admin">
+            <button class="back-btn" onclick="openPage('page-welcome')" style="width: max-content;">← Logout</button>
+            <h2 style="color: #ff007f; margin-top:20px;">Upload Video</h2>
+            <input type="text" id="yt-link" placeholder="YouTube Link Paste Karein...">
+            <button class="upload-btn" onclick="uploadVideo()">Upload 🚀</button>
+            <p id="msg" style="color: #00f2fe; margin-top:15px; font-size: 0.9rem;"></p>
         </div>
 
     </div>
@@ -179,66 +186,66 @@
         let defaultSongs = ["zvVcfgpLaYM", "0F_M8afjndI", "tS8XNIpATO8", "92BTpXGA8Cw", "AQSRq6eGWp0"];
         let myPlaylist = [];
 
-        try {
-            myPlaylist = JSON.parse(localStorage.getItem("satishPlaylist")) || defaultSongs;
-        } catch(e) {
-            myPlaylist = defaultSongs;
+        try { myPlaylist = JSON.parse(localStorage.getItem("satishPlaylist")) || defaultSongs; } 
+        catch(e) { myPlaylist = defaultSongs; }
+
+        // Page Switcher
+        function openPage(pageId) {
+            document.getElementById('page-welcome').style.display = 'none';
+            document.getElementById('page-playlist').style.display = 'none';
+            document.getElementById('page-admin').style.display = 'none';
+            
+            document.getElementById(pageId).style.display = 'flex';
+
+            if(pageId === 'page-playlist') loadVideos();
         }
 
-        // Screen Switcher
-        function openScreen(screenId) {
-            document.querySelectorAll('#welcome-screen, #music-area, #admin-login, #admin-panel').forEach(el => el.style.display = 'none');
-            document.getElementById(screenId).style.display = 'block';
-
-            if(screenId === 'music-area') {
-                loadVideos();
-            }
-        }
-
-        // Load Videos (Lazy Loading enabled)
+        // Load Videos (2GB RAM TRICK + NEON DESIGN)
         function loadVideos() {
-            const container = document.getElementById('playlist-container');
-            container.innerHTML = myPlaylist.map(id => `
-                <div class="video-card">
-                    <iframe src="https://www.youtube.com/embed/${id}" loading="lazy" allowfullscreen></iframe>
+            const feed = document.getElementById('video-feed');
+            feed.innerHTML = myPlaylist.map((id, index) => `
+                <div class="neo-video-card" onclick="playVideo('${id}', 'player-${index}')">
+                    <div class="thumb-box" id="player-${index}">
+                        <!-- Youtube Thumbnail Image (Load Fast) -->
+                        <img src="https://i.ytimg.com/vi/${id}/hqdefault.jpg" class="thumb-img" alt="Thumbnail" loading="lazy">
+                        <!-- Custom Neon Play Button -->
+                        <div class="play-btn-neon">▶</div>
+                    </div>
                 </div>
             `).join('');
         }
 
-        // Password Check
-        function checkPassword() {
-            let pass = document.getElementById('admin-pass').value;
+        // Play Video on Click (Saves RAM)
+        function playVideo(videoId, boxId) {
+            const box = document.getElementById(boxId);
+            box.innerHTML = `<iframe src="https://www.youtube.com/embed/${videoId}?autoplay=1" allow="autoplay; fullscreen"></iframe>`;
+        }
+
+        // Admin Password Check
+        function adminLogin() {
+            let pass = prompt("Admin Password Dalein:");
             if(pass === "satish1234") {
-                document.getElementById('admin-pass').value = '';
-                openScreen('admin-panel');
-            } else {
-                alert("Galat Password! Sirf Satish Coder entry kar sakta hai.");
+                openPage('page-admin');
+            } else if(pass !== null) {
+                alert("Galat Password! Sirf Satish Coder allow hai.");
             }
         }
 
-        // Extract ID from Link and Save
-        function addVideo() {
+        // Admin Upload Logic
+        function uploadVideo() {
             let url = document.getElementById('yt-link').value;
-            if(!url) return alert("Link daalna zaroori hai!");
+            if(!url) return alert("Link daaliye!");
 
-            // Extract YouTube ID
             let videoId = "";
             let match = url.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))([^&?]+)/);
-            if(match && match[1]) {
-                videoId = match[1];
-            } else {
-                videoId = url; 
-            }
+            if(match && match[1]) videoId = match[1]; else videoId = url;
 
-            // Save to Array and LocalStorage
-            myPlaylist.unshift(videoId); 
-            try {
-                localStorage.setItem("satishPlaylist", JSON.stringify(myPlaylist));
-            } catch(e) {}
+            myPlaylist.unshift(videoId);
+            try { localStorage.setItem("satishPlaylist", JSON.stringify(myPlaylist)); } catch(e) {}
 
             document.getElementById('yt-link').value = '';
-            document.getElementById('upload-msg').innerText = "Video Successfully Uploaded! 🎉";
-            setTimeout(() => { document.getElementById('upload-msg').innerText = ""; }, 3000);
+            document.getElementById('msg').innerText = "Video Upload Success! 🎉";
+            setTimeout(() => { document.getElementById('msg').innerText = ""; }, 3000);
         }
     </script>
 </body>

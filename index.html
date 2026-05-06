@@ -3,250 +3,187 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yadav Satish - VIP Music Hub</title>
     
-    <!-- === GOOGLE SEARCH SEO TAGS (Yahi aapko Google pe layega) === -->
-    <title>Satish Coder - Official Website | Maithali Songs</title>
-    <meta name="description" content="Aap sabhi ko Satish Coder website mein swagat hai. Yahan sunein premium Maithali songs aur hits. Official site of Satish Coder.">
-    <meta name="keywords" content="Satish Coder, satish coder, satish coder website, satish coder maithali, satish academy, web developer satish">
-    <meta name="author" content="Satish Coder">
+    <!-- SEO & Thumbnail -->
+    <title>Yadav Satish - VIP Music Hub</title>
+    <meta property="og:image" content="https://images.unsplash.com/photo-1470225620780-dba8ba36b745?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80">
+    <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/1384/1384061.png">
+
+    <script src="https://www.youtube.com/iframe_api"></script>
     
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;900&display=swap" rel="stylesheet">
     <style>
-        /* === ULTRA PRO VIP DESIGN === */
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+        :root { --blood: #ff0000; --bg: #000000; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Arial Black', sans-serif; }
+        body { background: var(--bg); color: #fff; overflow-x: hidden; }
+
+        header { 
+            display: flex; justify-content: space-between; align-items: center; 
+            padding: 12px 5%; background: #000; border-bottom: 2px solid var(--blood);
+            position: sticky; top: 0; z-index: 1000;
+        }
+        .logo { color: var(--blood); font-size: 22px; cursor: pointer; text-shadow: 0 0 10px var(--blood); }
+
+        .search-area { display: flex; width: 65%; gap: 5px; }
+        input { flex: 1; padding: 10px; border-radius: 25px; border: 1px solid var(--blood); background: #111; color: #fff; outline: none; }
+        .btn-s { padding: 10px; background: var(--blood); border: none; color: #fff; border-radius: 25px; cursor: pointer; font-weight: bold; }
+
+        .container { padding: 20px 5%; }
         
-        body { 
-            background: #050505; color: #fff; overflow: hidden; 
-            display: flex; justify-content: center; align-items: center; min-height: 100vh;
+        /* BACK BUTTON STYLE */
+        .back-btn { 
+            display: none; background: #222; color: var(--blood); border: 1px solid var(--blood); 
+            padding: 10px 20px; border-radius: 8px; cursor: pointer; font-weight: bold; 
+            margin-bottom: 20px; transition: 0.3s; width: fit-content;
         }
+        .back-btn:hover { background: var(--blood); color: #fff; }
 
-        /* Animated Dark Gradient Background */
-        .bg-anim {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(-45deg, #0f172a, #000000, #1e1b4b, #020617);
-            background-size: 400% 400%; animation: gradientBG 10s ease infinite; z-index: -2;
-        }
+        #watch-view { display: none; }
 
-        /* KONE MEIN NAAM (Top Right) */
-        .corner-name {
-            position: fixed; top: 15px; right: 20px;
-            font-size: 14px; font-weight: 900; color: #00f2fe;
-            text-transform: uppercase; letter-spacing: 2px;
-            text-shadow: 0 0 10px #00f2fe; z-index: 1000;
-        }
+        .player-box { background: #000; border: 2px solid var(--blood); border-radius: 15px; overflow: hidden; margin-bottom: 25px; box-shadow: 0 0 20px var(--blood); }
+        .iframe-wrap { position: relative; width: 100%; padding-bottom: 56.25%; background: #000; }
+        .iframe-wrap iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
 
-        /* Main Glass Card */
-        .main-card {
-            background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 25px;
-            padding: 40px 20px; width: 95%; max-width: 450px; text-align: center;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.8), inset 0 0 20px rgba(0, 242, 254, 0.1);
-            position: relative; overflow: hidden; height: 85vh; display: flex; flex-direction: column;
-        }
-
-        /* ================= PAGE 1: WELCOME SCREEN ================= */
-        #page-welcome { display: flex; flex-direction: column; justify-content: center; height: 100%; z-index: 5; }
+        .controls { padding: 15px; background: #0a0a0a; text-align: center; }
+        .v-title { font-size: 16px; font-weight: bold; margin-bottom: 15px; }
+        .btn-action { padding: 10px 20px; border: 1px solid var(--blood); background: #000; color: #fff; cursor: pointer; border-radius: 8px; font-weight: bold; margin: 5px; }
         
-        /* Jumping Text Logo */
-        .animated-logo { display: flex; justify-content: center; gap: 6px; margin-bottom: 20px; position: relative; z-index: 2;}
-        .animated-logo span {
-            font-size: 3.5rem; font-weight: 900; color: transparent; -webkit-text-stroke: 2px #fff;
-            animation: dangerBounce 1.5s infinite ease-in-out; animation-delay: calc(0.15s * var(--i));
-        }
-
-        p { color: #cbd5e1; font-size: 1rem; margin-bottom: 30px; }
-        
-        .btn {
-            background: linear-gradient(45deg, #00f2fe, #ff007f); color: #fff;
-            border: none; padding: 15px 35px; border-radius: 50px; font-size: 1.1rem; font-weight: bold;
-            cursor: pointer; text-transform: uppercase; transition: 0.3s;
-            box-shadow: 0 0 20px rgba(0, 242, 254, 0.5); position: relative; z-index: 2;
-        }
-        .btn:hover { transform: scale(1.05); box-shadow: 0 0 30px #ff007f; }
-
-        .admin-link { margin-top: 25px; color: #64748b; font-size: 0.85rem; cursor: pointer; text-decoration: underline; position: relative; z-index: 2; }
-
-        /* ================= PAGE 2: PLAYLIST SCREEN ================= */
-        #page-playlist { display: none; height: 100%; flex-direction: column; z-index: 5; }
-        
-        .header-playlist { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
-        .back-btn { background: rgba(0, 242, 254, 0.1); color: #00f2fe; border: 1px solid #00f2fe; padding: 5px 15px; border-radius: 20px; cursor: pointer; font-weight: bold; transition: 0.3s;}
-        .back-btn:hover { background: #00f2fe; color: #000; }
-        
-        /* 3D FALLING TEXT (Slow Motion) */
-        .falling-text {
-            position: absolute; top: -100px; left: 50%; transform: translateX(-50%);
-            font-size: 3.5rem; font-weight: 900; color: rgba(255, 255, 255, 0.2);
-            text-transform: uppercase; white-space: nowrap; pointer-events: none; letter-spacing: 5px;
-            text-shadow: 0 0 10px rgba(0, 242, 254, 0.6), 3px 3px 0px #ff007f, -3px -3px 0px #00f2fe;
-            animation: fallSlow 15s linear infinite; z-index: 0;
-        }
-
-        /* 2GB RAM TRICK: NEON VIDEO CARDS & SCROLL */
-        .scroll-area { overflow-y: auto; flex-grow: 1; padding-right: 5px; z-index: 2; position: relative;}
-        .scroll-area::-webkit-scrollbar { width: 4px; }
-        .scroll-area::-webkit-scrollbar-thumb { background: #00f2fe; border-radius: 10px; }
-
-        /* CHUCK-BHUK ANIMATION (Neon Border) */
-        .neo-video-card {
-            background: rgba(0,0,0,0.5); border: 2px solid transparent; border-radius: 15px;
-            margin-bottom: 25px; padding: 10px; cursor: pointer; transition: 0.3s;
-            position: relative; animation: chukBhuk 0.8s infinite alternate;
-        }
-        
-        .thumb-box { position: relative; width: 100%; aspect-ratio: 16/9; border-radius: 10px; overflow: hidden; background: #111; }
-        .thumb-img { width: 100%; height: 100%; object-fit: cover; opacity: 0.8; transition: 0.3s; }
-        .neo-video-card:hover .thumb-img { opacity: 1; transform: scale(1.05); }
-
-        /* Custom Neon Play Button */
-        .play-btn-neon {
-            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-            width: 60px; height: 60px; background: rgba(0, 0, 0, 0.6); border: 2px solid #00f2fe;
-            border-radius: 50%; display: flex; justify-content: center; align-items: center;
-            color: #00f2fe; font-size: 24px; backdrop-filter: blur(5px); transition: 0.3s;
-        }
-        .neo-video-card:hover .play-btn-neon { background: #00f2fe; color: #000; box-shadow: 0 0 15px #00f2fe; }
-
-        .video-title { color: #fff; font-size: 0.95rem; font-weight: 600; margin-top: 10px; text-align: left; }
-        iframe { width: 100%; aspect-ratio: 16/9; border: none; border-radius: 10px; display: block; }
-
-        /* ================= PAGE 3: ADMIN PANEL ================= */
-        #page-admin { display: none; height: 100%; flex-direction: column; justify-content: center; z-index: 5; }
-        input { width: 100%; padding: 12px; margin: 15px 0; border-radius: 10px; border: 1px solid #00f2fe; background: #111; color: #fff; outline: none; }
-        .upload-btn { background: #ff007f; color: #fff; border: none; padding: 12px; border-radius: 10px; font-weight: bold; cursor: pointer; }
-        
-        /* Animations */
-        @keyframes gradientBG { 0% {background-position: 0% 50%;} 50% {background-position: 100% 50%;} 100% {background-position: 0% 50%;} }
-        @keyframes dangerBounce {
-            0%, 100% { transform: translateY(0); color: transparent; text-shadow: 0 0 0px transparent; }
-            50% { transform: translateY(-15px) scale(1.1); color: #fff; -webkit-text-stroke: 0px; text-shadow: 0 0 10px #00f2fe, 0 0 30px #ff007f; }
-        }
-        @keyframes fallSlow {
-            0% { top: -20%; transform: translateX(-50%) perspective(800px) rotateX(15deg) scale(0.6); opacity: 0; }
-            10% { opacity: 0.9; }
-            90% { opacity: 0.9; }
-            100% { top: 120%; transform: translateX(-50%) perspective(800px) rotateX(15deg) scale(1.2); opacity: 0; }
-        }
-        @keyframes chukBhuk {
-            0% { border-color: #ff007f; box-shadow: 0 0 10px #ff007f; }
-            50% { border-color: #00f2fe; box-shadow: 0 0 10px #00f2fe; }
-            100% { border-color: #ffeb3b; box-shadow: 0 0 10px #ffeb3b; }
-        }
+        .video-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 15px; }
+        .card { background: #111; border-radius: 10px; overflow: hidden; cursor: pointer; border: 1px solid #222; transition: 0.3s; }
+        .card:hover { border-color: var(--blood); transform: scale(1.03); }
+        .card img { width: 100%; height: 100px; object-fit: cover; }
+        .card-info { padding: 8px; font-size: 11px; height: 40px; overflow: hidden; color: #eee; }
     </style>
 </head>
 <body>
 
-    <!-- Background -->
-    <div class="bg-anim"></div>
-    
-    <!-- Kone Wala Naam -->
-    <div class="corner-name">Satish Coder</div>
+<header>
+    <div class="logo" onclick="goHome()">YADAV SATISH</div>
+    <div class="search-area">
+        <input type="text" id="srch" placeholder="Gana khojein...">
+        <button class="btn-s" onclick="search()">Khojein</button>
+        <button class="btn-s" id="mic-btn" onclick="startVoice()">🎤</button>
+    </div>
+</header>
 
-    <div class="main-card">
-        
-        <!-- PAGE 1: WELCOME -->
-        <div id="page-welcome">
-            <div class="animated-logo">
-                <span style="--i:1;">S</span><span style="--i:2;">A</span><span style="--i:3;">T</span>
-                <span style="--i:4;">I</span><span style="--i:5;">S</span><span style="--i:6;">H</span>
-            </div>
-            <p>Aap sabhi ko Satish Coder website mein swagat hai.</p>
-            <button class="btn" onclick="openPage('page-playlist')">Maithali Song Sune 🎧</button>
-            <span class="admin-link" onclick="adminLogin()">Admin Login</span>
-        </div>
+<div class="container">
+    <!-- BACK BUTTON (Hamesha Player ya Search ke time dikhega) -->
+    <button id="globalBackBtn" class="back-btn" onclick="goHome()">⬅ PEECHE JAYEIN (BACK)</button>
 
-        <!-- PAGE 2: PLAYLIST (2GB RAM TRICK ACTIVE) -->
-        <div id="page-playlist">
-            <!-- Falling 3D Text -->
-            <div class="falling-text">SATISH CODER</div>
-            
-            <div class="header-playlist">
-                <button class="back-btn" onclick="openPage('page-welcome')">← Wapas</button>
-                <h3 style="color: #fff; text-shadow: 0 0 10px #00f2fe;">🔥 Playlist 🔥</h3>
-            </div>
-            
-            <div class="scroll-area" id="video-feed">
-                <!-- Videos JS se aayenge -->
-            </div>
-        </div>
-
-        <!-- PAGE 3: ADMIN PANEL -->
-        <div id="page-admin">
-            <button class="back-btn" onclick="openPage('page-welcome')" style="width: max-content;">← Logout</button>
-            <h2 style="color: #ff007f; margin-top:20px;">Upload Video</h2>
-            <input type="text" id="yt-link" placeholder="YouTube Link Paste Karein...">
-            <button class="upload-btn" onclick="uploadVideo()">Upload 🚀</button>
-            <p id="msg" style="color: #00f2fe; margin-top:15px; font-size: 0.9rem;"></p>
-        </div>
-
+    <div id="home-view">
+        <h2 id="gridTitle" style="margin-bottom:20px; color:var(--blood)">LATEST HIT SONGS</h2>
+        <div class="video-grid" id="mainGrid"></div>
     </div>
 
-    <script>
-        // Database simulation (Browser LocalStorage)
-        let defaultSongs = ["zvVcfgpLaYM", "0F_M8afjndI", "tS8XNIpATO8", "92BTpXGA8Cw", "AQSRq6eGWp0"];
-        let myPlaylist = [];
-
-        try { myPlaylist = JSON.parse(localStorage.getItem("satishPlaylist")) || defaultSongs; } 
-        catch(e) { myPlaylist = defaultSongs; }
-
-        // Page Switcher
-        function openPage(pageId) {
-            document.getElementById('page-welcome').style.display = 'none';
-            document.getElementById('page-playlist').style.display = 'none';
-            document.getElementById('page-admin').style.display = 'none';
-            
-            document.getElementById(pageId).style.display = 'flex';
-
-            if(pageId === 'page-playlist') loadVideos();
-        }
-
-        // Load Videos (2GB RAM TRICK + NEON DESIGN)
-        function loadVideos() {
-            const feed = document.getElementById('video-feed');
-            feed.innerHTML = myPlaylist.map((id, index) => `
-                <div class="neo-video-card" onclick="playVideo('${id}', 'player-${index}')">
-                    <div class="thumb-box" id="player-${index}">
-                        <!-- Youtube Thumbnail Image (Load Fast) -->
-                        <img src="https://i.ytimg.com/vi/${id}/hqdefault.jpg" class="thumb-img" alt="Thumbnail" loading="lazy">
-                        <!-- Custom Neon Play Button -->
-                        <div class="play-btn-neon">▶</div>
-                    </div>
+    <div id="watch-view">
+        <div class="player-box">
+            <div class="iframe-wrap" id="playerParent"><div id="player"></div></div>
+            <div class="controls">
+                <div class="v-title" id="vTitle">Gana Load Ho Raha Hai...</div>
+                <div class="btn-group">
+                    <button class="btn-action" onclick="player.playVideo()">PLAY</button>
+                    <button class="btn-action" onclick="player.pauseVideo()">PAUSE</button>
+                    <button class="btn-action" onclick="next()">NEXT</button>
                 </div>
-            `).join('');
-        }
+            </div>
+        </div>
+        <h3 style="margin-bottom:15px; color:var(--blood)">AAPKE LIYE 50 GAANE</h3>
+        <div class="video-grid" id="sideGrid"></div>
+    </div>
+</div>
 
-        // Play Video on Click (Saves RAM)
-        function playVideo(videoId, boxId) {
-            const box = document.getElementById(boxId);
-            box.innerHTML = `<iframe src="https://www.youtube.com/embed/${videoId}?autoplay=1" allow="autoplay; fullscreen"></iframe>`;
-        }
+<script>
+    const KEY = 'AIzaSyAiy3YkvJAec66NMIr2ulZToesvphZ4UMs'; 
+    let player, currentList = [], isReady = false;
 
-        // Admin Password Check
-        function adminLogin() {
-            let pass = prompt("Admin Password Dalein:");
-            if(pass === "satish1234") {
-                openPage('page-admin');
-            } else if(pass !== null) {
-                alert("Galat Password! Sirf Satish Coder allow hai.");
+    function onYouTubeIframeAPIReady() {
+        player = new YT.Player('player', {
+            playerVars: { 'autoplay': 1, 'controls': 1, 'vq': 'auto' },
+            events: { 
+                'onReady': () => { isReady = true; },
+                'onStateChange': (e) => { if(e.data == YT.PlayerState.ENDED) next(); }
             }
+        });
+    }
+
+    async function load(q, grid, limit = 50) {
+        const gridDiv = document.getElementById(grid);
+        gridDiv.innerHTML = '<p>Loading...</p>';
+        const url = `https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=${limit}&q=${encodeURIComponent(q)}&type=video&videoDuration=medium&key=${KEY}`;
+        try {
+            const res = await fetch(url);
+            const data = await res.json();
+            if(data.items) {
+                currentList = data.items;
+                gridDiv.innerHTML = '';
+                currentList.forEach(i => {
+                    gridDiv.innerHTML += `
+                    <div class="card" onclick="play('${i.id.videoId}','${i.snippet.title.replace(/'/g,"")}')">
+                        <img src="${i.snippet.thumbnails.medium.url}">
+                        <div class="card-info"><b>${i.snippet.title}</b></div>
+                    </div>`;
+                });
+            }
+        } catch(e) { gridDiv.innerHTML = 'Error!'; }
+    }
+
+    function play(id, t) {
+        document.getElementById('home-view').style.display = 'none';
+        document.getElementById('watch-view').style.display = 'block';
+        document.getElementById('globalBackBtn').style.display = 'block'; // Back button dikhao
+        document.getElementById('vTitle').innerText = t;
+        
+        window.scrollTo(0,0);
+        if (isReady && player.loadVideoById) {
+            player.loadVideoById({ videoId: id });
+        } else {
+            document.getElementById('playerParent').innerHTML = `<iframe id="player" src="https://www.youtube.com/embed/${id}?autoplay=1" allow="autoplay; fullscreen"></iframe>`;
         }
+        load(t + " songs", 'sideGrid', 50);
+    }
 
-        // Admin Upload Logic
-        function uploadVideo() {
-            let url = document.getElementById('yt-link').value;
-            if(!url) return alert("Link daaliye!");
-
-            let videoId = "";
-            let match = url.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))([^&?]+)/);
-            if(match && match[1]) videoId = match[1]; else videoId = url;
-
-            myPlaylist.unshift(videoId);
-            try { localStorage.setItem("satishPlaylist", JSON.stringify(myPlaylist)); } catch(e) {}
-
-            document.getElementById('yt-link').value = '';
-            document.getElementById('msg').innerText = "Video Upload Success! 🎉";
-            setTimeout(() => { document.getElementById('msg').innerText = ""; }, 3000);
+    function search() {
+        let q = document.getElementById('srch').value;
+        if(q) { 
+            document.getElementById('gridTitle').innerText = "Results for: " + q;
+            document.getElementById('globalBackBtn').style.display = 'block'; // Back button dikhao
+            load(q, 'mainGrid', 50); 
+            goHome(true); // Sirf view switch ke liye
         }
-    </script>
+    }
+
+    function startVoice() {
+        const Rec = window.SpeechRecognition || window.webkitSpeechRecognition;
+        if (!Rec) return;
+        const r = new Rec();
+        r.onresult = (e) => { 
+            document.getElementById('srch').value = e.results[0][0].transcript; 
+            search(); 
+        };
+        r.start();
+    }
+
+    function goHome(keepSearch = false) {
+        if(!keepSearch && player && player.stopVideo) player.stopVideo();
+        document.getElementById('watch-view').style.display = 'none';
+        document.getElementById('home-view').style.display = 'block';
+        
+        // Agar normal home par ja rahe hain to button chhupa do
+        if(!keepSearch) {
+            document.getElementById('globalBackBtn').style.display = 'none';
+            document.getElementById('gridTitle').innerText = "LATEST HIT SONGS";
+            load('Bhojpuri New Hits 2026', 'mainGrid', 50);
+        }
+    }
+
+    function next() {
+        if(currentList.length > 0) {
+            let idx = Math.floor(Math.random() * currentList.length);
+            play(currentList[idx].id.videoId, currentList[idx].snippet.title);
+        }
+    }
+
+    window.onload = () => load('Bhojpuri New Hits 2026', 'mainGrid', 50);
+</script>
 </body>
 </html>

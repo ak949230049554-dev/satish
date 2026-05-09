@@ -2,370 +2,200 @@
 <html lang="hi">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Satish Coder Playlist</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Yadav Satish - VIP Music Hub</title>
     
-    <!-- Google Search Thumbnail & Link Share Image -->
-    <link rel="icon" type="image/jpeg" href="https://images.unsplash.com/photo-1599813204908-1110a56bd122?q=80&w=256&auto=format&fit=crop" sizes="192x192">
-    <link rel="apple-touch-icon" href="https://images.unsplash.com/photo-1599813204908-1110a56bd122?q=80&w=256&auto=format&fit=crop">
-    <meta property="og:title" content="Satish Coder - Music Hub">
-    <meta property="og:description" content="Satish Coder ki website par best gaane sunein.">
-    <meta property="og:image" content="https://images.unsplash.com/photo-1599813204908-1110a56bd122?q=80&w=1080&auto=format&fit=crop">
-    
-    <!-- Fonts, Firebase, aur YouTube API -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700;900&display=swap" rel="stylesheet">
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+    <meta property="og:image" content="https://images.unsplash.com/photo-1470225620780-dba8ba36b745?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80">
+    <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/1384/1384061.png">
+
     <script src="https://www.youtube.com/iframe_api"></script>
-
+    
     <style>
-        /* === KHATARNAK PRO DESIGN === */
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+        :root { --blood: #ff0000; --bg: #000000; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Arial Black', sans-serif; }
+        body { background: var(--bg); color: #fff; overflow-x: hidden; }
 
-        body {
-            background-color: #000; color: #ffffff; display: flex;
-            justify-content: center; align-items: center;
-            min-height: 100vh; overflow-x: hidden;
+        header { 
+            display: flex; justify-content: space-between; align-items: center; 
+            padding: 12px 5%; background: #000; border-bottom: 2px solid var(--blood);
+            position: sticky; top: 0; z-index: 1000;
         }
+        .logo { color: var(--blood); font-size: 22px; cursor: pointer; text-shadow: 0 0 10px var(--blood); }
 
-        .bg-animation {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.8)), url('https://images.unsplash.com/photo-1599813204908-1110a56bd122?q=80&w=1080&auto=format&fit=crop');
-            background-size: cover; background-position: center; z-index: -2;
-        }
+        .search-area { display: flex; width: 65%; gap: 5px; }
+        input { flex: 1; padding: 10px; font-size: 16px; border-radius: 25px; border: 1px solid var(--blood); background: #111; color: #fff; outline: none; }
+        .btn-s { padding: 10px 15px; background: var(--blood); border: none; color: #fff; border-radius: 25px; cursor: pointer; font-weight: bold; }
 
-        .glow-orb {
-            position: absolute; width: 300px; height: 300px; background: #ff007f;
-            filter: blur(140px); border-radius: 50%;
-            animation: pulseOrb 2.5s alternate infinite ease-in-out; z-index: -1;
-        }
-
-        .premium-card {
-            background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
-            border: 2px solid rgba(255, 255, 255, 0.1); border-radius: 25px;
-            padding: 30px 20px; width: 95%; max-width: 450px; text-align: center;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.9), inset 0 0 15px rgba(0, 242, 254, 0.2);
-            position: relative; overflow: hidden;
-        }
-
-        /* 3D Falling Text */
-        .falling-3d-text {
-            position: absolute; top: -100px; left: 50%; transform: translateX(-50%);
-            font-size: 3.5rem; font-weight: 900; color: rgba(255, 255, 255, 0.2); 
-            text-transform: uppercase; white-space: nowrap; pointer-events: none; letter-spacing: 5px;
-            text-shadow: 0 0 10px rgba(0, 242, 254, 0.5), 3px 3px 0px #ff007f, -3px -3px 0px #00f2fe;
-            animation: fall3DSlow 15s linear infinite; z-index: 0;
-        }
-
-        @keyframes fall3DSlow {
-            0% { top: -20%; transform: translateX(-50%) perspective(800px) rotateX(15deg) scale(0.6); opacity: 0; }
-            10% { opacity: 0.9; }
-            90% { opacity: 0.9; }
-            100% { top: 120%; transform: translateX(-50%) perspective(800px) rotateX(15deg) scale(1.2); opacity: 0; }
-        }
-
-        /* Animated Logo */
-        .animated-logo { display: flex; justify-content: center; gap: 6px; margin-bottom: 20px; position: relative; z-index: 2;}
-        .animated-logo span {
-            font-size: 3.5rem; font-weight: 900; color: transparent; -webkit-text-stroke: 2px #fff;
-            animation: dangerBounce 1.5s infinite ease-in-out; animation-delay: calc(0.15s * var(--i));
-        }
-
-        /* ==========================================
-           YADAV SATISH 3D BLOOD EFFECT 
-           ========================================== */
-        .blood-text-container {
-            margin: 15px 0;
-            position: relative;
-            z-index: 2;
-        }
-        .blood-text {
-            font-size: 2.5rem;
-            font-weight: 900;
-            color: #ff0000; /* Pure Blood Red */
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            text-shadow: 
-                2px 2px 0px #8a0000, 
-                4px 4px 0px #5c0000, 
-                6px 6px 0px #2e0000, 
-                8px 8px 15px rgba(255, 0, 0, 0.8),
-                0px 0px 30px rgba(255, 0, 0, 0.6);
-            animation: bloodPulse 1.2s infinite alternate;
-        }
-
-        @keyframes bloodPulse {
-            0% { transform: scale(1); text-shadow: 2px 2px 0px #8a0000, 4px 4px 0px #5c0000, 6px 6px 0px #2e0000, 8px 8px 15px rgba(255, 0, 0, 0.8), 0px 0px 20px rgba(255, 0, 0, 0.5); }
-            100% { transform: scale(1.08); text-shadow: 2px 2px 0px #8a0000, 4px 4px 0px #5c0000, 6px 6px 0px #2e0000, 10px 10px 25px rgba(255, 0, 0, 1), 0px 0px 45px rgba(255, 0, 0, 1); }
-        }
-
-        .pro-btn {
-            background: linear-gradient(90deg, #ff007f, #00f2fe, #ffeb3b); background-size: 200% auto;
-            color: #000; border: none; padding: 15px 35px; border-radius: 50px;
-            font-size: 1.2rem; font-weight: 900; cursor: pointer;
-            box-shadow: 0 10px 30px rgba(255, 0, 127, 0.6); transition: 0.3s; text-transform: uppercase;
-            animation: btnGlow 2s infinite alternate; position: relative; z-index: 2;
-        }
-        .pro-btn:hover { transform: scale(1.1); box-shadow: 0 15px 40px rgba(0, 242, 254, 0.8); color: #fff; }
-
-        .admin-link { display: block; margin-top: 20px; color: #ccc; font-size: 0.9rem; cursor: pointer; text-decoration: underline; position: relative; z-index: 2; }
-
-        /* Screens */
-        #music-area, #admin-login, #admin-panel { display: none; position: relative; z-index: 2; }
+        .container { padding: 20px 5%; }
         
-        /* Search Box Design */
-        .search-box {
-            width: 100%; padding: 12px 15px; margin-bottom: 15px; border-radius: 50px;
-            border: 2px solid #00f2fe; background: rgba(0, 0, 0, 0.7); color: #fff;
-            font-size: 1rem; outline: none; text-align: center;
-            box-shadow: 0 0 15px rgba(0, 242, 254, 0.4);
-            position: relative; z-index: 2;
+        .back-btn { 
+            display: none; background: #222; color: var(--blood); border: 1px solid var(--blood); 
+            padding: 10px 20px; border-radius: 8px; cursor: pointer; font-weight: bold; 
+            margin-bottom: 20px; transition: 0.3s; width: fit-content;
         }
-        .search-box::placeholder { color: #00f2fe; }
-        .search-box:focus { border-color: #ff007f; box-shadow: 0 0 20px rgba(255, 0, 127, 0.6); }
+        .back-btn:hover { background: var(--blood); color: #fff; }
 
-        .scroll-box { max-height: 400px; overflow-y: auto; padding: 10px; position: relative; z-index: 2;}
-        .scroll-box::-webkit-scrollbar { width: 5px; }
-        .scroll-box::-webkit-scrollbar-thumb { background: #00f2fe; border-radius: 10px; }
+        #watch-view { display: none; }
 
-        /* Video Cards */
-        .video-card {
-            background: #111; margin-bottom: 25px; border-radius: 15px; overflow: hidden;
-            border: 2px solid #333; transition: 0.3s;
-        }
-        .video-card:hover { border-color: #ff0000; box-shadow: 0 0 15px rgba(255, 0, 0, 0.7); }
-        .song-title {
-            font-size: 0.9rem; color: #fff; padding: 10px; text-transform: capitalize;
-            border-bottom: 1px solid #333; background: linear-gradient(90deg, #111, #222);
-        }
-        .video-card iframe { width: 100%; aspect-ratio: 16/9; border: none; display: block; }
+        .player-box { background: #000; border: 2px solid var(--blood); border-radius: 15px; overflow: hidden; margin-bottom: 25px; box-shadow: 0 0 20px var(--blood); }
+        .iframe-wrap { position: relative; width: 100%; padding-bottom: 56.25%; background: #000; }
+        .iframe-wrap iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
 
-        /* Admin Panel Inputs */
-        input[type="password"], input[type="text"] {
-            width: 100%; padding: 12px; margin: 10px 0; border-radius: 10px; border: 2px solid #ff007f;
-            background: #111; color: #fff; font-size: 1rem; outline: none;
-        }
-        .upload-btn { background: #00f2fe; color: #000; border: none; padding: 12px 25px; border-radius: 10px; font-weight: 900; cursor: pointer; width: 100%; margin-top: 10px;}
+        .controls { padding: 15px; background: #0a0a0a; text-align: center; }
+        .v-title { font-size: 16px; font-weight: bold; margin-bottom: 15px; }
+        .btn-action { padding: 10px 20px; border: 1px solid var(--blood); background: #000; color: #fff; cursor: pointer; border-radius: 8px; font-weight: bold; margin: 5px; }
+        
+        .video-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 15px; }
+        .card { background: #111; border-radius: 10px; overflow: hidden; cursor: pointer; border: 1px solid #222; transition: 0.3s; }
+        .card:hover { border-color: var(--blood); transform: scale(1.03); }
+        .card img { width: 100%; height: 100px; object-fit: cover; }
+        .card-info { padding: 8px; font-size: 11px; height: 40px; overflow: hidden; color: #eee; }
 
-        .back-btn { background: transparent; color: #ffeb3b; border: 1px solid #ffeb3b; padding: 5px 15px; border-radius: 30px; cursor: pointer; font-weight: 600; margin-bottom: 5px; display: inline-block;}
-
-        @keyframes dangerBounce {
-            0%, 100% { transform: translateY(0); color: transparent; text-shadow: 0 0 0px transparent; }
-            50% { transform: translateY(-15px) scale(1.1); color: #fff; -webkit-text-stroke: 0px; text-shadow: 0 0 10px #00f2fe, 0 0 30px #ff007f; }
+        /* ANDROID RESPONSIVE DESIGN */
+        @media (max-width: 768px) {
+            header { flex-direction: column; gap: 10px; padding: 15px 5%; }
+            .search-area { width: 100%; }
+            .logo { font-size: 24px; }
         }
     </style>
 </head>
 <body>
 
-    <div class="bg-animation"></div>
-    <div class="glow-orb"></div>
+<header>
+    <div class="logo" onclick="goHome()">YADAV SATISH</div>
+    <div class="search-area">
+        <input type="text" id="srch" placeholder="Gana khojein...">
+        <button class="btn-s" onclick="search()">Khojein</button>
+        <button class="btn-s" id="mic-btn" onclick="startVoice()">🎤</button>
+    </div>
+</header>
 
-    <div class="premium-card">
-        
-        <!-- Welcome Screen -->
-        <div id="welcome-screen">
-            <div class="animated-logo">
-                <span style="--i:1;">S</span><span style="--i:2;">A</span><span style="--i:3;">T</span>
-                <span style="--i:4;">I</span><span style="--i:5;">S</span><span style="--i:6;">H</span>
-            </div>
-            <p style="color: #ccc; margin-bottom: 20px;">Satish Coder Website Me Swagat Hai.</p>
-            <button class="pro-btn" onclick="openScreen('music-area')">Song Sune 🔊</button>
-            <span class="admin-link" onclick="openScreen('admin-login')">Admin Panel</span>
-        </div>
+<div class="container">
+    <button id="globalBackBtn" class="back-btn" onclick="goHome()">⬅ PEECHE JAYEIN (BACK)</button>
 
-        <!-- Music Playlist Screen -->
-        <div id="music-area">
-            <div class="falling-3d-text">SATISH CODER</div>
-            <button class="back-btn" onclick="openScreen('welcome-screen')">← Wapas</button>
-            
-            <!-- 🩸 YADAV SATISH BLOODED TEXT YAHAN LAGAYA HAI 🩸 -->
-            <div class="blood-text-container">
-                <div class="blood-text">Yadav Satish</div>
-            </div>
-            
-            <!-- SEARCH BAR -->
-            <input type="text" id="search-box" class="search-box" placeholder="🎵 Gaana Search Karein..." onkeyup="searchSongs()">
-            
-            <div class="scroll-box" id="playlist-container">
-                <p id="loading-text" style="color: #00f2fe;">Loading Songs...</p>
-            </div>
-        </div>
-
-        <!-- Admin Login Screen -->
-        <div id="admin-login">
-            <button class="back-btn" onclick="openScreen('welcome-screen')">← Wapas</button>
-            <h2 style="color: #00f2fe; margin-bottom: 10px;">Admin Login</h2>
-            <input type="password" id="admin-pass" placeholder="Password Dalein...">
-            <button class="upload-btn" onclick="checkPassword()">Login</button>
-        </div>
-
-        <!-- Admin Control Panel -->
-        <div id="admin-panel">
-            <button class="back-btn" onclick="openScreen('welcome-screen')">← Logout</button>
-            <h2 style="color: #ff007f;">Naya Gaana Daalein</h2>
-            <input type="text" id="song-name" placeholder="Gaane Ka Naam">
-            <input type="text" id="yt-link" placeholder="YouTube Video Link">
-            <button class="upload-btn" onclick="addVideo()">Upload Video 🚀</button>
-            <p id="upload-msg" style="color: #ffeb3b; margin-top:10px; font-size:0.9rem;"></p>
-        </div>
-
+    <div id="home-view">
+        <h2 id="gridTitle" style="margin-bottom:20px; color:var(--blood)">LATEST HIT SONGS</h2>
+        <div class="video-grid" id="mainGrid"></div>
     </div>
 
-    <script>
-        // ==========================================
-        // FIREBASE CONFIGURATION
-        // ==========================================
-        const firebaseConfig = {
-            apiKey: "YOUR_API_KEY",
-            authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-            databaseURL: "https://YOUR_PROJECT_ID-default-rtdb.firebaseio.com",
-            projectId: "YOUR_PROJECT_ID",
-            storageBucket: "YOUR_PROJECT_ID.appspot.com",
-            messagingSenderId: "YOUR_SENDER_ID",
-            appId: "YOUR_APP_ID"
-        };
-
-        if (!firebase.apps.length) {
-            firebase.initializeApp(firebaseConfig);
-        }
-        const database = firebase.database();
-
-        // NAYE AUR PURANE MILA KAR TOTAL 9 GAANE (Aapke diye gaye 4 naye links add kiye hain)
-        let defaultSongs = [
-            { name: "Satish New Hit 1", id: "10Oc4u3H7sM" },
-            { name: "Satish New Hit 2", id: "pIX7uSvx2fM" },
-            { name: "Satish New Hit 3", id: "QjW99s69z_I" },
-            { name: "Satish New Hit 4", id: "aK3iD0PT92w" },
-            { name: "Satish Viral Song 5", id: "zvVcfgpLaYM" },
-            { name: "Satish Hit Track 6", id: "0F_M8afjndI" },
-            { name: "Satish Special 7", id: "tS8XNIpATO8" },
-            { name: "Satish Bass Boosted 8", id: "92BTpXGA8Cw" },
-            { name: "Satish Trending 9", id: "AQSRq6eGWp0" }
-        ];
-        
-        let myPlaylist = [];
-        let ytPlayers = []; 
-
-        function openScreen(screenId) {
-            document.querySelectorAll('#welcome-screen, #music-area, #admin-login, #admin-panel').forEach(el => el.style.display = 'none');
-            document.getElementById(screenId).style.display = 'block';
-            if(screenId === 'music-area') {
-                document.getElementById('search-box').value = ''; 
-                loadVideosFromDatabase();
-            }
-        }
-
-        function loadVideosFromDatabase() {
-            if (firebaseConfig.apiKey === "YOUR_API_KEY") {
-                myPlaylist = defaultSongs;
-                renderVideos(myPlaylist);
-                return;
-            }
-            
-            database.ref('satishPlaylist').on('value', (snapshot) => {
-                const data = snapshot.val();
-                if (data) {
-                    myPlaylist = Object.keys(data).map(key => ({
-                        name: data[key].name || "Unknown Song",
-                        id: data[key].id
-                    })).reverse(); 
-                } else {
-                    myPlaylist = defaultSongs;
-                }
-                renderVideos(myPlaylist);
-            });
-        }
-
-        function renderVideos(songList) {
-            const container = document.getElementById('playlist-container');
-            if(songList.length === 0) {
-                container.innerHTML = `<p style="color: #ff007f;">Gaana nahi mila bhai!</p>`;
-                return;
-            }
-            
-            container.innerHTML = songList.map((song, index) => `
-                <div class="video-card">
-                    <div class="song-title">🎵 ${song.name}</div>
-                    <div id="player-${index}"></div>
+    <div id="watch-view">
+        <div class="player-box">
+            <div class="iframe-wrap" id="playerParent"><div id="player"></div></div>
+            <div class="controls">
+                <div class="v-title" id="vTitle">Gana Load Ho Raha Hai...</div>
+                <div class="btn-group">
+                    <button class="btn-action" onclick="player.playVideo()">PLAY</button>
+                    <button class="btn-action" onclick="player.pauseVideo()">PAUSE</button>
+                    <button class="btn-action" onclick="next()">NEXT</button>
                 </div>
-            `).join('');
+            </div>
+        </div>
+        <h3 id="mixTitle" style="margin-bottom:15px; color:var(--blood)">YOUTUBE STYLE MIX GAANE</h3>
+        <div class="video-grid" id="sideGrid"></div>
+    </div>
+</div>
 
-            ytPlayers = [];
-            songList.forEach((song, index) => {
-                let player = new YT.Player(`player-${index}`, {
-                    videoId: song.id,
-                    playerVars: { 'playsinline': 1 },
-                    events: {
-                        'onStateChange': onPlayerStateChange
-                    }
+<script>
+    const KEY = 'AIzaSyAiy3YkvJAec66NMIr2ulZToesvphZ4UMs'; 
+    let player, currentList = [], isReady = false;
+
+    function onYouTubeIframeAPIReady() {
+        player = new YT.Player('player', {
+            playerVars: { 'autoplay': 1, 'controls': 1, 'vq': 'auto' },
+            events: { 
+                'onReady': () => { isReady = true; },
+                'onStateChange': (e) => { if(e.data == YT.PlayerState.ENDED) next(); }
+            }
+        });
+    }
+
+    async function load(q, grid, limit = 50) {
+        const gridDiv = document.getElementById(grid);
+        gridDiv.innerHTML = '<p>Loading...</p>';
+        const url = `https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=${limit}&q=${encodeURIComponent(q)}&type=video&videoDuration=medium&key=${KEY}`;
+        try {
+            const res = await fetch(url);
+            const data = await res.json();
+            if(data.items) {
+                if(grid === 'mainGrid') currentList = data.items;
+                gridDiv.innerHTML = '';
+                data.items.forEach(i => {
+                    let cleanTitle = i.snippet.title.replace(/'/g, "").replace(/"/g, "");
+                    gridDiv.innerHTML += `
+                    <div class="card" onclick="play('${i.id.videoId}','${cleanTitle}')">
+                        <img src="${i.snippet.thumbnails.medium.url}">
+                        <div class="card-info"><b>${i.snippet.title}</b></div>
+                    </div>`;
                 });
-                ytPlayers.push(player);
-            });
-        }
-
-        // ========================================================
-        // YAHAN DATA SAVE KARNE WALA JAADU HAI (stopVideo)
-        // ========================================================
-        function onPlayerStateChange(event) {
-            if (event.data == YT.PlayerState.PLAYING) {
-                ytPlayers.forEach(function(player) {
-                    if (player !== event.target && typeof player.stopVideo === 'function') {
-                        player.stopVideo(); 
-                    }
-                });
             }
+        } catch(e) { gridDiv.innerHTML = 'Error!'; }
+    }
+
+    function play(id, t) {
+        document.getElementById('home-view').style.display = 'none';
+        document.getElementById('watch-view').style.display = 'block';
+        document.getElementById('globalBackBtn').style.display = 'block'; 
+        document.getElementById('vTitle').innerText = t;
+        
+        window.scrollTo(0,0);
+        if (isReady && player.loadVideoById) {
+            player.loadVideoById({ videoId: id });
+        } else {
+            document.getElementById('playerParent').innerHTML = `<iframe id="player" src="https://www.youtube.com/embed/${id}?autoplay=1" allow="autoplay; fullscreen"></iframe>`;
         }
 
-        function searchSongs() {
-            let filter = document.getElementById('search-box').value.toLowerCase();
-            let filteredList = myPlaylist.filter(song => song.name.toLowerCase().includes(filter));
-            renderVideos(filteredList);
+        // --- YOUTUBE ALGORITHM LOGIC (HAR RANG KE GAANE) ---
+        let baseKeyword = t.split(/[|,-]/)[0].trim();
+        let varietyTags = [" trending", " remix", " hits", " lofi", " mashup", " non stop"];
+        let randomTag = varietyTags[Math.floor(Math.random() * varietyTags.length)];
+        
+        // Isse search query "Gana Ka Naam + Random Tag" ban jayegi
+        let mixQuery = baseKeyword + randomTag;
+        document.getElementById('mixTitle').innerText = "MIX: " + mixQuery.toUpperCase();
+        load(mixQuery, 'sideGrid', 30);
+    }
+
+    function search() {
+        let q = document.getElementById('srch').value;
+        if(q) { 
+            document.getElementById('gridTitle').innerText = "Results for: " + q;
+            document.getElementById('globalBackBtn').style.display = 'block'; 
+            load(q, 'mainGrid', 50); 
+            goHome(true); 
         }
+    }
 
-        function checkPassword() {
-            let pass = document.getElementById('admin-pass').value;
-            if(pass === "satish1234") {
-                document.getElementById('admin-pass').value = '';
-                openScreen('admin-panel');
-            } else {
-                alert("Galat Password! Sirf Satish Coder entry kar sakta hai.");
-            }
+    function startVoice() {
+        const Rec = window.SpeechRecognition || window.webkitSpeechRecognition;
+        if (!Rec) return;
+        const r = new Rec();
+        r.onresult = (e) => { 
+            document.getElementById('srch').value = e.results[0][0].transcript; 
+            search(); 
+        };
+        r.start();
+    }
+
+    function goHome(keepSearch = false) {
+        if(!keepSearch && player && player.stopVideo) player.stopVideo();
+        document.getElementById('watch-view').style.display = 'none';
+        document.getElementById('home-view').style.display = 'block';
+        
+        if(!keepSearch) {
+            document.getElementById('globalBackBtn').style.display = 'none';
+            document.getElementById('gridTitle').innerText = "LATEST HIT SONGS";
+            load('Bhojpuri New Hits 2026', 'mainGrid', 50);
         }
+    }
 
-        function addVideo() {
-            let sName = document.getElementById('song-name').value;
-            let url = document.getElementById('yt-link').value;
-            
-            if(!sName || !url) return alert("Gaane ka naam aur Link dono daalna zaroori hai!");
-
-            let videoId = "";
-            let match = url.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))([^&?]+)/);
-            if(match && match[1]) {
-                videoId = match[1];
-            } else {
-                videoId = url; 
-            }
-
-            let newSong = { name: sName, id: videoId };
-
-            if (firebaseConfig.apiKey === "YOUR_API_KEY") {
-                myPlaylist.unshift(newSong);
-                document.getElementById('song-name').value = '';
-                document.getElementById('yt-link').value = '';
-                alert("Database link nahi hai! Ye sirf temporary add hua hai.");
-                renderVideos(myPlaylist); 
-                return;
-            }
-
-            database.ref('satishPlaylist').push(newSong)
-                .then(() => {
-                    document.getElementById('song-name').value = '';
-                    document.getElementById('yt-link').value = '';
-                    document.getElementById('upload-msg').innerText = "Mast! Gaana Upload Ho Gaya 🎉";
-                    setTimeout(() => { document.getElementById('upload-msg').innerText = ""; }, 3000);
-                })
-                .catch((error) => alert("Error: " + error));
+    function next() {
+        if(currentList.length > 0) {
+            let idx = Math.floor(Math.random() * currentList.length);
+            play(currentList[idx].id.videoId, currentList[idx].snippet.title);
         }
-    </script>
+    }
+
+    window.onload = () => load('Bhojpuri New Hits 2026', 'mainGrid', 50);
+</script>
 </body>
 </html>

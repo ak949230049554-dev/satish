@@ -9,6 +9,7 @@
     <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/1384/1384061.png">
 
     <script src="https://www.youtube.com/iframe_api"></script>
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
     
     <style>
         :root { --blood: #ff0000; --bg: #000000; }
@@ -18,13 +19,73 @@
         header { 
             display: flex; justify-content: space-between; align-items: center; 
             padding: 12px 5%; background: #000; border-bottom: 2px solid var(--blood);
-            position: sticky; top: 0; z-index: 1000;
+            position: sticky; top: 0; z-index: 1000; flex-wrap: wrap; gap: 10px;
         }
-        .logo { color: var(--blood); font-size: 22px; cursor: pointer; text-shadow: 0 0 10px var(--blood); }
+        .logo { color: var(--blood); font-size: 22px; cursor: pointer; text-shadow: 0 0 15px var(--blood); }
 
         .search-area { display: flex; width: 65%; gap: 5px; }
         input { flex: 1; padding: 10px; font-size: 16px; border-radius: 25px; border: 1px solid var(--blood); background: #111; color: #fff; outline: none; }
         .btn-s { padding: 10px 15px; background: var(--blood); border: none; color: #fff; border-radius: 25px; cursor: pointer; font-weight: bold; }
+
+        /* --- 3D LOGIN SCREEN EFFECTS --- */
+        #login-wrapper {
+            position: relative;
+            min-height: 80vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            perspective: 1000px; /* 3D Perspective */
+        }
+        
+        #bloodCanvas {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        #login-screen { 
+            position: relative;
+            z-index: 10;
+            background: rgba(15, 0, 0, 0.85); 
+            border: 2px solid var(--blood); 
+            padding: 40px; 
+            border-radius: 20px; 
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+            backdrop-filter: blur(8px);
+            /* 3D Floating & Neon Blood Animation */
+            animation: float3d 4s ease-in-out infinite;
+        }
+
+        @keyframes float3d {
+            0% { 
+                transform: translateY(0px) rotateX(0deg); 
+                box-shadow: 0 10px 30px rgba(255, 0, 0, 0.4), inset 0 0 15px rgba(255, 0, 0, 0.2); 
+            }
+            50% { 
+                transform: translateY(-15px) rotateX(5deg) scale(1.02); 
+                box-shadow: 0 25px 50px rgba(255, 0, 0, 0.8), inset 0 0 30px rgba(255, 0, 0, 0.5); 
+            }
+            100% { 
+                transform: translateY(0px) rotateX(0deg); 
+                box-shadow: 0 10px 30px rgba(255, 0, 0, 0.4), inset 0 0 15px rgba(255, 0, 0, 0.2); 
+            }
+        }
+
+        #login-btn { 
+            padding: 12px 25px; background: #fff; color: #000; 
+            border: 2px solid var(--blood); border-radius: 8px; 
+            cursor: pointer; font-weight: bold; margin-top: 25px; 
+            font-size: 16px; transition: 0.3s;
+            box-shadow: 0 0 10px var(--blood);
+        }
+        #login-btn:hover { background: var(--blood); color: #fff; box-shadow: 0 0 20px var(--blood); transform: scale(1.05); }
+        /* ------------------------------- */
+
+        #app-content { display: none; } /* Hidden until logged in */
 
         .container { padding: 20px 5%; }
         
@@ -43,19 +104,18 @@
 
         .controls { padding: 15px; background: #0a0a0a; text-align: center; }
         .v-title { font-size: 16px; font-weight: bold; margin-bottom: 15px; }
-        .btn-action { padding: 10px 20px; border: 1px solid var(--blood); background: #000; color: #fff; cursor: pointer; border-radius: 8px; font-weight: bold; margin: 5px; }
+        .btn-action { padding: 10px 20px; border: 1px solid var(--blood); background: #000; color: #fff; cursor: pointer; border-radius: 8px; font-weight: bold; margin: 5px; transition: 0.2s; }
+        .btn-action:hover { background: var(--blood); }
         
         .video-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 15px; }
         .card { background: #111; border-radius: 10px; overflow: hidden; cursor: pointer; border: 1px solid #222; transition: 0.3s; }
-        .card:hover { border-color: var(--blood); transform: scale(1.03); }
+        .card:hover { border-color: var(--blood); transform: scale(1.03); box-shadow: 0 0 15px var(--blood); }
         .card img { width: 100%; height: 100px; object-fit: cover; }
         .card-info { padding: 8px; font-size: 11px; height: 40px; overflow: hidden; color: #eee; }
 
-        /* ANDROID RESPONSIVE DESIGN */
         @media (max-width: 768px) {
             header { flex-direction: column; gap: 10px; padding: 15px 5%; }
             .search-area { width: 100%; }
-            .logo { font-size: 24px; }
         }
     </style>
 </head>
@@ -70,8 +130,17 @@
     </div>
 </header>
 
-<div class="container">
-    <button id="globalBackBtn" class="back-btn" onclick="goHome()">⬅ PEECHE JAYEIN (BACK)</button>
+<div id="login-wrapper">
+    <canvas id="bloodCanvas"></canvas>
+    <div id="login-screen">
+        <h2 style="color: var(--blood); text-transform: uppercase; letter-spacing: 2px;">VIP Access</h2>
+        <p style="margin-top: 15px; color: #ccc; font-size: 14px;">Music Hub mein entry ke liye Google se verify karein.</p>
+        <button id="login-btn" onclick="handleAuthClick()">Google Se Login Karein</button>
+    </div>
+</div>
+
+<div id="app-content" class="container">
+    <button id="globalBackBtn" class="back-btn" onclick="goHome()">⬅ PEECHHE JAYEIN</button>
 
     <div id="home-view">
         <h2 id="gridTitle" style="margin-bottom:20px; color:var(--blood)">LATEST HIT SONGS</h2>
@@ -96,8 +165,97 @@
 </div>
 
 <script>
-    const KEY = 'AIzaSyAiy3YkvJAec66NMIr2ulZToesvphZ4UMs'; 
+    // --- 3D BLOOD CANVAS ANIMATION ---
+    const canvas = document.getElementById('bloodCanvas');
+    const ctx = canvas.getContext('2d');
+    let particlesArray = [];
+    let animationFrameId;
+
+    function resizeCanvas() {
+        canvas.width = document.getElementById('login-wrapper').offsetWidth;
+        canvas.height = document.getElementById('login-wrapper').offsetHeight;
+    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    class BloodParticle {
+        constructor() {
+            this.x = Math.random() * canvas.width;
+            this.y = Math.random() * canvas.height;
+            this.size = Math.random() * 4 + 1; // Different sizes for 3D depth effect
+            this.speedY = Math.random() * 2 + 0.5; // Far particles fall slower
+            this.opacity = Math.random() * 0.8 + 0.2;
+        }
+        update() {
+            this.y += this.speedY;
+            if (this.y > canvas.height) {
+                this.y = 0 - this.size;
+                this.x = Math.random() * canvas.width;
+            }
+        }
+        draw() {
+            ctx.fillStyle = `rgba(255, 0, 0, ${this.opacity})`;
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+            ctx.closePath();
+            ctx.fill();
+            // Glow effect
+            ctx.shadowBlur = 8;
+            ctx.shadowColor = "red";
+        }
+    }
+
+    function initBlood() {
+        particlesArray = [];
+        for (let i = 0; i < 80; i++) { // 80 drops of blood
+            particlesArray.push(new BloodParticle());
+        }
+    }
+
+    function animateBlood() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        for (let i = 0; i < particlesArray.length; i++) {
+            particlesArray[i].update();
+            particlesArray[i].draw();
+        }
+        animationFrameId = requestAnimationFrame(animateBlood);
+    }
+    initBlood();
+    animateBlood();
+    // ---------------------------------
+
+    // --- GOOGLE OAUTH & YOUTUBE LOGIC ---
+    const CLIENT_ID = 'YOUR_GOOGLE_CLIENT_ID_HERE'; // Yaha apni ID dalein
+    const SCOPES = 'https://www.googleapis.com/auth/youtube.readonly';
+    
+    let tokenClient;
+    let accessToken = null;
     let player, currentList = [], isReady = false;
+
+    window.onload = function () {
+        tokenClient = google.accounts.oauth2.initTokenClient({
+            client_id: CLIENT_ID,
+            scope: SCOPES,
+            callback: (tokenResponse) => {
+                if (tokenResponse && tokenResponse.access_token) {
+                    accessToken = tokenResponse.access_token;
+                    
+                    // Stop Blood Animation to save CPU
+                    cancelAnimationFrame(animationFrameId);
+                    
+                    // Hide Login, Show Main App
+                    document.getElementById('login-wrapper').style.display = 'none';
+                    document.getElementById('app-content').style.display = 'block';
+                    
+                    load('Bhojpuri New Hits 2026', 'mainGrid', 50);
+                }
+            },
+        });
+    };
+
+    function handleAuthClick() {
+        tokenClient.requestAccessToken();
+    }
 
     function onYouTubeIframeAPIReady() {
         player = new YT.Player('player', {
@@ -110,12 +268,27 @@
     }
 
     async function load(q, grid, limit = 50) {
+        if (!accessToken) return;
+
         const gridDiv = document.getElementById(grid);
         gridDiv.innerHTML = '<p>Loading...</p>';
-        const url = `https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=${limit}&q=${encodeURIComponent(q)}&type=video&videoDuration=medium&key=${KEY}`;
+        
+        const url = `https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=${limit}&q=${encodeURIComponent(q)}&type=video&videoDuration=medium`;
+        
         try {
-            const res = await fetch(url);
+            const res = await fetch(url, {
+                headers: {
+                    'Authorization': `Bearer ${accessToken}`,
+                    'Accept': 'application/json'
+                }
+            });
             const data = await res.json();
+            
+            if(data.error) {
+                gridDiv.innerHTML = `<p style="color:red">Error: ${data.error.message}</p>`;
+                return;
+            }
+
             if(data.items) {
                 if(grid === 'mainGrid') currentList = data.items;
                 gridDiv.innerHTML = '';
@@ -128,7 +301,7 @@
                     </div>`;
                 });
             }
-        } catch(e) { gridDiv.innerHTML = 'Error!'; }
+        } catch(e) { gridDiv.innerHTML = 'Error fetching data!'; }
     }
 
     function play(id, t) {
@@ -144,12 +317,10 @@
             document.getElementById('playerParent').innerHTML = `<iframe id="player" src="https://www.youtube.com/embed/${id}?autoplay=1" allow="autoplay; fullscreen"></iframe>`;
         }
 
-        // --- YOUTUBE ALGORITHM LOGIC (HAR RANG KE GAANE) ---
         let baseKeyword = t.split(/[|,-]/)[0].trim();
         let varietyTags = [" trending", " remix", " hits", " lofi", " mashup", " non stop"];
         let randomTag = varietyTags[Math.floor(Math.random() * varietyTags.length)];
         
-        // Isse search query "Gana Ka Naam + Random Tag" ban jayegi
         let mixQuery = baseKeyword + randomTag;
         document.getElementById('mixTitle').innerText = "MIX: " + mixQuery.toUpperCase();
         load(mixQuery, 'sideGrid', 30);
@@ -184,18 +355,9 @@
         if(!keepSearch) {
             document.getElementById('globalBackBtn').style.display = 'none';
             document.getElementById('gridTitle').innerText = "LATEST HIT SONGS";
-            load('Bhojpuri New Hits 2026', 'mainGrid', 50);
+            load('all New Hits 2026', 'mainGrid', 50);
         }
     }
-
-    function next() {
-        if(currentList.length > 0) {
-            let idx = Math.floor(Math.random() * currentList.length);
-            play(currentList[idx].id.videoId, currentList[idx].snippet.title);
-        }
-    }
-
-    window.onload = () => load('Bhojpuri New Hits 2026', 'mainGrid', 50);
 </script>
 </body>
 </html>

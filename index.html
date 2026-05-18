@@ -2,121 +2,46 @@
 <html lang="hi">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Yadav Satish - VIP Music Hub</title>
-    
-    <meta property="og:image" content="https://images.unsplash.com/photo-1470225620780-dba8ba36b745?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80">
-    <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/1384/1384061.png">
-
     <script src="https://www.youtube.com/iframe_api"></script>
-    <script src="https://accounts.google.com/gsi/client" async defer></script>
-    
     <style>
         :root { --blood: #ff0000; --bg: #000000; }
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Arial Black', sans-serif; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: sans-serif; }
         body { background: var(--bg); color: #fff; overflow-x: hidden; }
 
         header { 
             display: flex; justify-content: space-between; align-items: center; 
-            padding: 12px 5%; background: #000; border-bottom: 2px solid var(--blood);
-            position: sticky; top: 0; z-index: 1000; flex-wrap: wrap; gap: 10px;
+            padding: 10px 5%; background: #000; border-bottom: 2px solid var(--blood);
+            position: sticky; top: 0; z-index: 1000;
         }
-        .logo { color: var(--blood); font-size: 22px; cursor: pointer; text-shadow: 0 0 15px var(--blood); }
+        .logo { color: var(--blood); font-size: 22px; font-weight: bold; cursor: pointer; text-shadow: 0 0 10px var(--blood); }
 
         .search-area { display: flex; width: 65%; gap: 5px; }
-        input { flex: 1; padding: 10px; font-size: 16px; border-radius: 25px; border: 1px solid var(--blood); background: #111; color: #fff; outline: none; }
-        .btn-s { padding: 10px 15px; background: var(--blood); border: none; color: #fff; border-radius: 25px; cursor: pointer; font-weight: bold; }
+        input { flex: 1; padding: 10px; border-radius: 20px; border: 1px solid var(--blood); background: #111; color: #fff; outline: none; font-size: 14px; }
+        .btn-s { padding: 10px 12px; background: var(--blood); border: none; color: #fff; border-radius: 20px; cursor: pointer; font-weight: bold; }
 
-        /* --- 3D LOGIN SCREEN EFFECTS --- */
-        #login-wrapper {
-            position: relative;
-            min-height: 80vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            perspective: 1000px; /* 3D Perspective */
-        }
-        
-        #bloodCanvas {
-            position: absolute;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            z-index: 1;
-            pointer-events: none;
-        }
-
-        #login-screen { 
-            position: relative;
-            z-index: 10;
-            background: rgba(15, 0, 0, 0.85); 
-            border: 2px solid var(--blood); 
-            padding: 40px; 
-            border-radius: 20px; 
-            width: 90%;
-            max-width: 400px;
-            text-align: center;
-            backdrop-filter: blur(8px);
-            /* 3D Floating & Neon Blood Animation */
-            animation: float3d 4s ease-in-out infinite;
-        }
-
-        @keyframes float3d {
-            0% { 
-                transform: translateY(0px) rotateX(0deg); 
-                box-shadow: 0 10px 30px rgba(255, 0, 0, 0.4), inset 0 0 15px rgba(255, 0, 0, 0.2); 
-            }
-            50% { 
-                transform: translateY(-15px) rotateX(5deg) scale(1.02); 
-                box-shadow: 0 25px 50px rgba(255, 0, 0, 0.8), inset 0 0 30px rgba(255, 0, 0, 0.5); 
-            }
-            100% { 
-                transform: translateY(0px) rotateX(0deg); 
-                box-shadow: 0 10px 30px rgba(255, 0, 0, 0.4), inset 0 0 15px rgba(255, 0, 0, 0.2); 
-            }
-        }
-
-        #login-btn { 
-            padding: 12px 25px; background: #fff; color: #000; 
-            border: 2px solid var(--blood); border-radius: 8px; 
-            cursor: pointer; font-weight: bold; margin-top: 25px; 
-            font-size: 16px; transition: 0.3s;
-            box-shadow: 0 0 10px var(--blood);
-        }
-        #login-btn:hover { background: var(--blood); color: #fff; box-shadow: 0 0 20px var(--blood); transform: scale(1.05); }
-        /* ------------------------------- */
-
-        #app-content { display: none; } /* Hidden until logged in */
-
-        .container { padding: 20px 5%; }
-        
-        .back-btn { 
-            display: none; background: #222; color: var(--blood); border: 1px solid var(--blood); 
-            padding: 10px 20px; border-radius: 8px; cursor: pointer; font-weight: bold; 
-            margin-bottom: 20px; transition: 0.3s; width: fit-content;
-        }
-        .back-btn:hover { background: var(--blood); color: #fff; }
-
+        .container { padding: 15px 5%; }
         #watch-view { display: none; }
 
-        .player-box { background: #000; border: 2px solid var(--blood); border-radius: 15px; overflow: hidden; margin-bottom: 25px; box-shadow: 0 0 20px var(--blood); }
+        /* PLAYER BOX */
+        .player-box { background: #000; border: 2px solid var(--blood); border-radius: 12px; overflow: hidden; margin-bottom: 20px; box-shadow: 0 0 15px var(--blood); }
         .iframe-wrap { position: relative; width: 100%; padding-bottom: 56.25%; background: #000; }
         .iframe-wrap iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
 
         .controls { padding: 15px; background: #0a0a0a; text-align: center; }
-        .v-title { font-size: 16px; font-weight: bold; margin-bottom: 15px; }
-        .btn-action { padding: 10px 20px; border: 1px solid var(--blood); background: #000; color: #fff; cursor: pointer; border-radius: 8px; font-weight: bold; margin: 5px; transition: 0.2s; }
-        .btn-action:hover { background: var(--blood); }
+        .v-title { font-size: 16px; font-weight: bold; color: #fff; margin-bottom: 10px; }
         
-        .video-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 15px; }
-        .card { background: #111; border-radius: 10px; overflow: hidden; cursor: pointer; border: 1px solid #222; transition: 0.3s; }
-        .card:hover { border-color: var(--blood); transform: scale(1.03); box-shadow: 0 0 15px var(--blood); }
-        .card img { width: 100%; height: 100px; object-fit: cover; }
-        .card-info { padding: 8px; font-size: 11px; height: 40px; overflow: hidden; color: #eee; }
+        .btn-group { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; }
+        .btn-action { padding: 10px 18px; border: 1px solid var(--blood); background: #000; color: #fff; cursor: pointer; border-radius: 8px; font-weight: bold; }
+        .btn-home { background: var(--blood); width: 100%; margin-top: 15px; border: none; padding: 12px; border-radius: 8px; color: white; font-weight: bold; cursor: pointer; }
 
-        @media (max-width: 768px) {
-            header { flex-direction: column; gap: 10px; padding: 15px 5%; }
-            .search-area { width: 100%; }
-        }
+        /* GRID */
+        .video-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 12px; }
+        .card { background: #111; border-radius: 8px; overflow: hidden; cursor: pointer; border: 1px solid #222; transition: 0.2s; }
+        .card:hover { border-color: var(--blood); transform: scale(1.03); }
+        .card img { width: 100%; height: 100px; object-fit: cover; }
+        .card-info { padding: 8px; font-size: 11px; height: 40px; overflow: hidden; color: #ccc; }
     </style>
 </head>
 <body>
@@ -124,240 +49,141 @@
 <header>
     <div class="logo" onclick="goHome()">YADAV SATISH</div>
     <div class="search-area">
-        <input type="text" id="srch" placeholder="Gana khojein...">
-        <button class="btn-s" onclick="search()">Khojein</button>
-        <button class="btn-s" id="mic-btn" onclick="startVoice()">🎤</button>
+        <input type="text" id="srch" placeholder="Gana likhein ya mike dabayein...">
+        <button class="btn-s" onclick="search()">KHOJEIN</button>
+        <button class="btn-s" onclick="startVoice()">🎤</button>
     </div>
 </header>
 
-<div id="login-wrapper">
-    <canvas id="bloodCanvas"></canvas>
-    <div id="login-screen">
-        <h2 style="color: var(--blood); text-transform: uppercase; letter-spacing: 2px;">VIP Access</h2>
-        <p style="margin-top: 15px; color: #ccc; font-size: 14px;">Music Hub mein entry ke liye Google se verify karein.</p>
-        <button id="login-btn" onclick="handleAuthClick()">Google Se Login Karein</button>
-    </div>
-</div>
-
-<div id="app-content" class="container">
-    <button id="globalBackBtn" class="back-btn" onclick="goHome()">⬅ PEECHHE JAYEIN</button>
-
+<div class="container">
     <div id="home-view">
-        <h2 id="gridTitle" style="margin-bottom:20px; color:var(--blood)">LATEST HIT SONGS</h2>
+        <h3 id="gridTitle" style="margin-bottom:15px; color:var(--blood); font-size: 18px;">TOP 50 BHOJPURI DHAMAKA</h3>
         <div class="video-grid" id="mainGrid"></div>
     </div>
 
     <div id="watch-view">
         <div class="player-box">
-            <div class="iframe-wrap" id="playerParent"><div id="player"></div></div>
+            <div class="iframe-wrap" id="playerParent">
+                <!-- YouTube Player sits here -->
+                <div id="player"></div>
+            </div>
             <div class="controls">
-                <div class="v-title" id="vTitle">Gana Load Ho Raha Hai...</div>
+                <div class="v-title" id="vTitle">Gana Chal Raha Hai...</div>
                 <div class="btn-group">
                     <button class="btn-action" onclick="player.playVideo()">PLAY</button>
                     <button class="btn-action" onclick="player.pauseVideo()">PAUSE</button>
                     <button class="btn-action" onclick="next()">NEXT</button>
                 </div>
+                <button class="btn-home" onclick="goHome()">🏠 WAPAS HOME PAR JAYEIN</button>
             </div>
         </div>
-        <h3 id="mixTitle" style="margin-bottom:15px; color:var(--blood)">YOUTUBE STYLE MIX GAANE</h3>
+        
+        <h3 style="margin-bottom:15px; color:var(--blood); font-size: 16px;">AAPKE LIYE 50 KHAS GAANE</h3>
         <div class="video-grid" id="sideGrid"></div>
     </div>
 </div>
 
 <script>
-    // --- 3D BLOOD CANVAS ANIMATION ---
-    const canvas = document.getElementById('bloodCanvas');
-    const ctx = canvas.getContext('2d');
-    let particlesArray = [];
-    let animationFrameId;
+    // Agar ye key kaam na kare, to apni nayi YouTube API Key yaha dalein
+    const KEY = 'AIzaSyAiy3YkvJAec66NMIr2ulZToesvphZ4UMs'; 
+    let player, currentList = [], currentId = "";
+    let apiReady = false;
 
-    function resizeCanvas() {
-        canvas.width = document.getElementById('login-wrapper').offsetWidth;
-        canvas.height = document.getElementById('login-wrapper').offsetHeight;
-    }
-    window.addEventListener('resize', resizeCanvas);
-    resizeCanvas();
-
-    class BloodParticle {
-        constructor() {
-            this.x = Math.random() * canvas.width;
-            this.y = Math.random() * canvas.height;
-            this.size = Math.random() * 4 + 1; // Different sizes for 3D depth effect
-            this.speedY = Math.random() * 2 + 0.5; // Far particles fall slower
-            this.opacity = Math.random() * 0.8 + 0.2;
-        }
-        update() {
-            this.y += this.speedY;
-            if (this.y > canvas.height) {
-                this.y = 0 - this.size;
-                this.x = Math.random() * canvas.width;
-            }
-        }
-        draw() {
-            ctx.fillStyle = `rgba(255, 0, 0, ${this.opacity})`;
-            ctx.beginPath();
-            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-            ctx.closePath();
-            ctx.fill();
-            // Glow effect
-            ctx.shadowBlur = 8;
-            ctx.shadowColor = "red";
-        }
-    }
-
-    function initBlood() {
-        particlesArray = [];
-        for (let i = 0; i < 80; i++) { // 80 drops of blood
-            particlesArray.push(new BloodParticle());
-        }
-    }
-
-    function animateBlood() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        for (let i = 0; i < particlesArray.length; i++) {
-            particlesArray[i].update();
-            particlesArray[i].draw();
-        }
-        animationFrameId = requestAnimationFrame(animateBlood);
-    }
-    initBlood();
-    animateBlood();
-    // ---------------------------------
-
-    // --- GOOGLE OAUTH & YOUTUBE LOGIC ---
-    const CLIENT_ID = 'YOUR_GOOGLE_CLIENT_ID_HERE'; // Yaha apni ID dalein
-    const SCOPES = 'https://www.googleapis.com/auth/youtube.readonly';
-    
-    let tokenClient;
-    let accessToken = null;
-    let player, currentList = [], isReady = false;
-
-    window.onload = function () {
-        tokenClient = google.accounts.oauth2.initTokenClient({
-            client_id: CLIENT_ID,
-            scope: SCOPES,
-            callback: (tokenResponse) => {
-                if (tokenResponse && tokenResponse.access_token) {
-                    accessToken = tokenResponse.access_token;
-                    
-                    // Stop Blood Animation to save CPU
-                    cancelAnimationFrame(animationFrameId);
-                    
-                    // Hide Login, Show Main App
-                    document.getElementById('login-wrapper').style.display = 'none';
-                    document.getElementById('app-content').style.display = 'block';
-                    
-                    load('Bhojpuri New Hits 2026', 'mainGrid', 50);
-                }
-            },
-        });
-    };
-
-    function handleAuthClick() {
-        tokenClient.requestAccessToken();
-    }
-
+    // YouTube API Load
     function onYouTubeIframeAPIReady() {
         player = new YT.Player('player', {
-            playerVars: { 'autoplay': 1, 'controls': 1, 'vq': 'auto' },
-            events: { 
-                'onReady': () => { isReady = true; },
+            height: '100%',
+            width: '100%',
+            playerVars: { 
+                'autoplay': 1, 
+                'controls': 1, 
+                'rel': 0, 
+                'modestbranding': 1,
+                'vq': 'auto' // Slow internet friendly
+            },
+            events: {
+                'onReady': () => { apiReady = true; },
                 'onStateChange': (e) => { if(e.data == YT.PlayerState.ENDED) next(); }
             }
         });
     }
 
     async function load(q, grid, limit = 50) {
-        if (!accessToken) return;
-
         const gridDiv = document.getElementById(grid);
-        gridDiv.innerHTML = '<p>Loading...</p>';
+        gridDiv.innerHTML = '<p style="color:var(--blood)">Loading...</p>';
         
-        const url = `https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=${limit}&q=${encodeURIComponent(q)}&type=video&videoDuration=medium`;
+        const url = `https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=${limit}&q=${encodeURIComponent(q)}&type=video&videoDuration=medium&key=${KEY}`;
         
         try {
-            const res = await fetch(url, {
-                headers: {
-                    'Authorization': `Bearer ${accessToken}`,
-                    'Accept': 'application/json'
-                }
-            });
+            const res = await fetch(url);
             const data = await res.json();
-            
-            if(data.error) {
-                gridDiv.innerHTML = `<p style="color:red">Error: ${data.error.message}</p>`;
-                return;
-            }
-
             if(data.items) {
-                if(grid === 'mainGrid') currentList = data.items;
+                currentList = data.items;
                 gridDiv.innerHTML = '';
-                data.items.forEach(i => {
-                    let cleanTitle = i.snippet.title.replace(/'/g, "").replace(/"/g, "");
+                currentList.forEach(i => {
                     gridDiv.innerHTML += `
-                    <div class="card" onclick="play('${i.id.videoId}','${cleanTitle}')">
+                    <div class="card" onclick="play('${i.id.videoId}','${i.snippet.title.replace(/'/g,"")}')">
                         <img src="${i.snippet.thumbnails.medium.url}">
                         <div class="card-info"><b>${i.snippet.title}</b></div>
                     </div>`;
                 });
             }
-        } catch(e) { gridDiv.innerHTML = 'Error fetching data!'; }
+        } catch(e) { gridDiv.innerHTML = '<p>Internet Check Karein!</p>'; }
     }
 
     function play(id, t) {
+        currentId = id;
         document.getElementById('home-view').style.display = 'none';
         document.getElementById('watch-view').style.display = 'block';
-        document.getElementById('globalBackBtn').style.display = 'block'; 
         document.getElementById('vTitle').innerText = t;
         
-        window.scrollTo(0,0);
-        if (isReady && player.loadVideoById) {
-            player.loadVideoById({ videoId: id });
-        } else {
-            document.getElementById('playerParent').innerHTML = `<iframe id="player" src="https://www.youtube.com/embed/${id}?autoplay=1" allow="autoplay; fullscreen"></iframe>`;
-        }
+        window.scrollTo({ top: 0, behavior: 'smooth' });
 
-        let baseKeyword = t.split(/[|,-]/)[0].trim();
-        let varietyTags = [" trending", " remix", " hits", " lofi", " mashup", " non stop"];
-        let randomTag = varietyTags[Math.floor(Math.random() * varietyTags.length)];
+        // Player check and load
+        if (apiReady && player && player.loadVideoById) {
+            player.loadVideoById({ videoId: id, suggestedQuality: 'default' });
+        } else {
+            // Manual fallback if API fails
+            document.getElementById('playerParent').innerHTML = `<iframe id="player" src="https://www.youtube.com/embed/${id}?autoplay=1&rel=0" allow="autoplay; fullscreen"></iframe>`;
+        }
         
-        let mixQuery = baseKeyword + randomTag;
-        document.getElementById('mixTitle').innerText = "MIX: " + mixQuery.toUpperCase();
-        load(mixQuery, 'sideGrid', 30);
+        load(t + " songs", 'sideGrid', 50);
     }
 
     function search() {
         let q = document.getElementById('srch').value;
-        if(q) { 
-            document.getElementById('gridTitle').innerText = "Results for: " + q;
-            document.getElementById('globalBackBtn').style.display = 'block'; 
-            load(q, 'mainGrid', 50); 
-            goHome(true); 
+        if(q) {
+            document.getElementById('gridTitle').innerText = "Search: " + q;
+            load(q, 'mainGrid', 50);
+            goHome();
         }
     }
 
     function startVoice() {
         const Rec = window.SpeechRecognition || window.webkitSpeechRecognition;
-        if (!Rec) return;
+        if (!Rec) return alert("Mic Problem");
         const r = new Rec();
-        r.onresult = (e) => { 
-            document.getElementById('srch').value = e.results[0][0].transcript; 
-            search(); 
+        r.onresult = (e) => {
+            document.getElementById('srch').value = e.results[0][0].transcript;
+            search();
         };
         r.start();
     }
 
-    function goHome(keepSearch = false) {
-        if(!keepSearch && player && player.stopVideo) player.stopVideo();
+    function goHome() {
+        if(player && player.stopVideo) player.stopVideo();
         document.getElementById('watch-view').style.display = 'none';
         document.getElementById('home-view').style.display = 'block';
-        
-        if(!keepSearch) {
-            document.getElementById('globalBackBtn').style.display = 'none';
-            document.getElementById('gridTitle').innerText = "LATEST HIT SONGS";
-            load('all New Hits 2026', 'mainGrid', 50);
+    }
+
+    function next() {
+        if (currentList.length > 0) {
+            let idx = Math.floor(Math.random() * currentList.length);
+            play(currentList[idx].id.videoId, currentList[idx].snippet.title);
         }
     }
+
+    window.onload = () => load('Bhojpuri Hits 2026', 'mainGrid', 50);
 </script>
 </body>
 </html>

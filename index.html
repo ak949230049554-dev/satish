@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <!-- Google Search Console Verification Tag -->
+    <!-- YAHAN HAI TUMHARA GOOGLE VERIFICATION TAG (Bilkul Sahi Jagah Par) -->
     <meta name="google-site-verification" content="CI8r8upGLNqw9n7fDZE_hgsk8RdD3grDMgFq_js9m1Q" />
     
     <title>Satish Official</title>
@@ -20,7 +20,7 @@
       "name": "Satish Official",
       "url": "https://tumhari-website-ka-link.com",
       "image": "https://tumhari-website-ka-link.com/favicon.png",
-      "jobTitle": "Web Developer & satish official"
+      "jobTitle": "Web Developer & Satish Official"
     }
     </script>
     <script src="https://www.youtube.com/iframe_api"></script>
@@ -102,12 +102,10 @@
 </div>
 
 <script>
-    // Agar ye key kaam na kare, to apni nayi YouTube API Key yaha dalein
     const KEY = 'AIzaSyAiy3YkvJAec66NMIr2ulZToesvphZ4UMs'; 
     let player, currentList = [], currentId = "";
     let apiReady = false;
 
-    // YouTube API Load
     function onYouTubeIframeAPIReady() {
         player = new YT.Player('player', {
             height: '100%',
@@ -117,7 +115,7 @@
                 'controls': 1, 
                 'rel': 0, 
                 'modestbranding': 1,
-                'vq': 'auto' // Slow internet friendly
+                'vq': 'auto' 
             },
             events: {
                 'onReady': () => { apiReady = true; },
@@ -157,11 +155,9 @@
         
         window.scrollTo({ top: 0, behavior: 'smooth' });
 
-        // Player check and load
         if (apiReady && player && player.loadVideoById) {
             player.loadVideoById({ videoId: id, suggestedQuality: 'default' });
         } else {
-            // Manual fallback if API fails
             document.getElementById('playerParent').innerHTML = `<iframe id="player" src="https://www.youtube.com/embed/${id}?autoplay=1&rel=0" allow="autoplay; fullscreen"></iframe>`;
         }
         

@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Juniper App</title>
+    <style>
+        /* Basic Setup */
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, sans-serif; }
+        body { background-color: #e0e0e0; display: flex; justify-content: center; height: 100vh; overflow: hidden; }
+        
+        /* Mobile App Container */
+        .app-container { width: 100%; max-width: 420px; height: 100vh; background: #f8f9fa; position: relative; display: flex; flex-direction: column; box-shadow: 0 0 20px rgba(0,0,0,0.2); }
+        
+        /* Top Header (VidMate Red Theme) */
+        .header { background: #e50914; padding: 15px; display: flex; align-items: center; gap: 10px; z-index: 100; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .logo { color: white; font-size: 22px; font-weight: bold; letter-spacing: 1px; }
+        .search-box { flex: 1; background: white; border-radius: 8px; display: flex; align-items: center; padding: 0 10px; height: 35px; }
+        .search-box input { border: none; outline: none; width: 100%; font-size: 14px; background: transparent; }
+        .search-btn { background: none; border: none; font-size: 16px; cursor: pointer; color: #e50914; }
+
+        /* Scrollable Categories */
+        .categories { display: flex; gap: 10px; padding: 10px 15px; overflow-x: auto; background: #fff; border-bottom: 1px solid #ddd; flex-shrink: 0; }
+        .categories::-webkit-scrollbar { display: none; }
+        .chip { padding: 6px 16px; background: #f0f0f0; border-radius: 20px; font-size: 13px; white-space: nowrap; cursor: pointer; color: #333; font-weight: 500; }
+        .chip.active { background: #e50914; color: white; }
+
+        /* Video Feed (Scrollable Area) */
+        .video-feed { flex: 1; overflow-y: auto; padding-bottom: 60px; background: #f0f2f5; }
+        .video-feed::-webkit-scrollbar { display: none; }
+        
+        .video-card { background: white; margin-bottom: 10px; cursor: pointer; }
+        .video-thumb { width: 100%; aspect-ratio: 16/9; object-fit: cover; background: #ddd; }
+        .video-info { padding: 12px 15px; display: flex; gap: 12px; }
+        .channel-icon { width: 40px; height: 40px; border-radius: 50%; background: #ccc; flex-shrink: 0; }
+        .video-text h3 { font-size: 15px; font-weight: 600; color: #111; margin-bottom: 4px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; line-height: 1.3; }
+        .video-text p { font-size: 12px; color: #606060; }
+
+        /* Bottom Navigation Bar */
+        .bottom-nav { position: absolute; bottom: 0; width: 100%; background: #fff; display: flex; justify-content: space-around; padding: 10px 0; border-top: 1px solid #ddd; z-index: 100; }
+        .nav-item { display: flex; flex-direction: column; align-items: center; font-size: 11px; color: #606060; cursor: pointer; gap: 4px; }
+        .nav-item.active { color: #e50914; }
+        .nav-icon { font-size: 20px; }
+
+        /* Full Screen Player Modal */
+        #playerModal { display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #fff; z-index: 200; flex-direction: column; }
+        .player-header { padding: 15px; background: #000; color: white; display: flex; align-items: center; gap: 15px; }
+        .close-btn { background: none; border: none; color: white; font-size: 24px; cursor: pointer; }
+        .iframe-container { width: 100%; aspect-ratio: 16/9; background: #000; }
+        .iframe-container iframe { width: 100%; height: 100%; border: none; }
+        .playing-info { padding: 15px; }
+        .playing-title { font-size: 18px; font-weight: 600; margin-bottom: 8px; line-height: 1.3; }
+        
+        /* Loading Text */
+        .loader { text-align: center; padding: 20px; font-size: 14px; color: #666; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+<div class="app-container">
+    <!-- Header with Search -->
+    <div class="header">
+        <div class="logo">Juniper</div>
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="Search movies, songs...">
+            <button class="search-btn" onclick="executeSearch()">🔍</button>
+        </div>
+    </div>
+
+    <!-- Scrollable Categories -->
+    <div class="categories">
+        <div class="chip active" onclick="searchCategory('trending hindi songs')">Home</div>
+        <div class="chip" onclick="searchCategory('latest movies 2026')">Movies</div>
+        <div class="chip" onclick="searchCategory('free fire live')">Gaming</div>
+        <div class="chip" onclick="searchCategory('new bhojpuri songs')">Bhojpuri</div>
+        <div class="chip" onclick="searchCategory('news live')">News</div>
+    </div>
+
+    <!-- Video Feed List -->
+    <div class="video-feed" id="videoFeed">
+        <div class="loader">App Start ho raha hai...</div>
+    </div>
+
+    <!-- Bottom Nav Bar -->
+    <div class="bottom-nav">
+        <div class="nav-item active"><span class="nav-icon">🏠</span>Home</div>
+        <div class="nav-item"><span class="nav-icon">🔥</span>Shorts</div>
+        <div class="nav-item"><span class="nav-icon">📁</span>Files</div>
+        <div class="nav-item"><span class="nav-icon">👤</span>Me</div>
+    </div>
+</div>
+
+<!-- Player Popup Modal -->
+<div id="playerModal">
+    <div class="player-header">
+        <button class="close-btn" onclick="closePlayer()">←</button>
+        <span style="font-weight: bold; font-size: 16px;">Now Playing</span>
+    </div>
+    <div class="iframe-container" id="playerContainer"></div>
+    <div class="playing-info">
+        <h3 class="playing-title" id="playingTitle">Video Title</h3>
+        <p style="color: #606060; font-size: 13px;" id="playingChannel">Channel Name</p>
+    </div>
+</div>
+
+<script>
+    // 🔴 DHYAN DEIN: Yahan par aapko apne Glitch server ka asli link dalna hoga.
+    // Jab tak aap Glitch wala link nahi daalte, videos load nahi honge.
+    const BACKEND_URL = 'https://aapka-project-naam.glitch.me/api/search?q=';
+
+    // Video Search karne ka function
+    async function fetchVideos(query) {
+        const feed = document.getElementById('videoFeed');
+        feed.innerHTML = '<div class="loader">Videos dhundh raha hai... Please wait ⏳</div>';
+
+        try {
+            // Server ko request bhej rahe hain
+            const response = await fetch(BACKEND_URL + encodeURIComponent(query));
+            const data = await response.json();
+
+            feed.innerHTML = ''; // Loading text clear karo
+
+            if (data.length === 0) {
+                feed.innerHTML = '<div class="loader">Koi video nahi mila.</div>';
+                return;
+            }
+
+            // Data ko App design me set karna
+            data.forEach(item => {
+                feed.innerHTML += `
+                    <div class="video-card" onclick="openVideo('${item.id}', '${item.title.replace(/'/g, "\\'")}', '${item.channel.replace(/'/g, "\\'")}')">
+                        <img src="${item.thumb}" class="video-thumb" alt="Thumbnail">
+                        <div class="video-info">
+                            <img src="${item.thumb}" class="channel-icon">
+                            <div class="video-text">
+                                <h3>${item.title}</h3>
+                                <p>${item.channel} • views</p>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+        } catch (error) {
+            feed.innerHTML = '<div class="loader" style="color:red;">Error! Glitch Server se connect nahi ho paya. Pehle Glitch par server on karein.</div>';
+        }
+    }
+
+    // Search bar se search karna
+    function executeSearch() {
+        const query = document.getElementById('searchInput').value;
+        if(query) fetchVideos(query);
+    }
+
+    // Category button se search karna
+    function searchCategory(query) {
+        document.getElementById('searchInput').value = ''; // search box khali karo
+        fetchVideos(query);
+    }
+
+    // Enter dabane par search ho jaye
+    document.getElementById('searchInput').addEventListener('keypress', function (e) {
+        if (e.key === 'Enter') executeSearch();
+    });
+
+    // Video Player Open karna
+    function openVideo(id, title, channel) {
+        document.getElementById('playerModal').style.display = 'flex';
+        document.getElementById('playingTitle').innerText = title;
+        document.getElementById('playingChannel').innerText = channel;
+        
+        document.getElementById('playerContainer').innerHTML = `
+            <iframe 
+                src="https://www.youtube.com/embed/${id}?autoplay=1&modestbranding=1&rel=0" 
+                allow="autoplay; fullscreen">
+            </iframe>
+        `;
+    }
+
+    // Video Player Close karna
+    function closePlayer() {
+        document.getElementById('playerModal').style.display = 'none';
+        document.getElementById('playerContainer').innerHTML = ''; // Iframe delete karo taki video band ho jaye
+    }
+
+    // App khulte hi default gaane load karo
+    window.onload = () => {
+        fetchVideos('latest trending hindi songs');
+    };
+</script>
+
+</body>
+</html>
